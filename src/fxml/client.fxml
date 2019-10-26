@@ -35,18 +35,18 @@
             <Label text="Code postal : " GridPane.rowIndex="4" />
             <Label text="Ville : " GridPane.rowIndex="5" />
             <Label text="Pays : " GridPane.rowIndex="6" />
-            <TextField fx:id="tf_nom" onKeyTyped="#check_vide" GridPane.columnIndex="1" />
-            <TextField fx:id="tf_prenom" onKeyTyped="#check_vide" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="tf_num" onKeyTyped="#check_vide" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="tf_nom_rue" onKeyTyped="#check_vide" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="tf_code_postal" onKeyTyped="#check_vide_cp" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextField fx:id="tf_ville" onKeyTyped="#check_vide" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <TextField fx:id="tf_pays" onKeyTyped="#check_vide" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <TextField fx:id="tf_nom" GridPane.columnIndex="1" />
+            <TextField fx:id="tf_prenom" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="tf_num" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="tf_nom_rue" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="tf_code_postal" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="tf_ville" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="tf_pays" GridPane.columnIndex="1" GridPane.rowIndex="6" />
          </children>
       </GridPane>
       <FlowPane alignment="CENTER" prefHeight="48.0" prefWidth="560.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#creation" text="Creer" />
+            <Button fx:id="b_creer" disable="true" mnemonicParsing="false" onAction="#creation" text="Creer" />
          </children>
       </FlowPane>
       <FlowPane alignment="CENTER" prefHeight="109.0" prefWidth="560.0">

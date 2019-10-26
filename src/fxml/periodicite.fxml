@@ -22,12 +22,12 @@
         </rowConstraints>
          <children>
             <Label alignment="CENTER_RIGHT" text="Periodicité : " />
-            <TextField fx:id="tf_periodicite" maxWidth="200.0" onKeyTyped="#check_tf" prefHeight="26.0" prefWidth="200.0" GridPane.columnIndex="1" />
+            <TextField fx:id="tf_periodicite" maxWidth="200.0" prefHeight="26.0" prefWidth="200.0" GridPane.columnIndex="1" />
          </children>
       </GridPane>
       <FlowPane alignment="CENTER" prefHeight="200.0" prefWidth="200.0">
          <children>
-            <Button alignment="CENTER" mnemonicParsing="false" onAction="#creation" text="Button" />
+            <Button fx:id="b_creer" disable="true" mnemonicParsing="false" onAction="#creation" text="Button" />
          </children>
       </FlowPane>
       <FlowPane alignment="CENTER" prefHeight="200.0" prefWidth="200.0">

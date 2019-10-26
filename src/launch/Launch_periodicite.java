@@ -13,14 +13,17 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import metier.Periodicite;
 
 public class Launch_periodicite extends Application implements Initializable{
 
 	@FXML private TextField tf_periodicite;
 	@FXML private Button b_creer;
+	@FXML	private Label lbl_display;
 	private static DAOFactory daos;
 	
 	
@@ -46,8 +49,10 @@ public class Launch_periodicite extends Application implements Initializable{
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		 
 		tf_periodicite.textProperty().addListener((observable, oldValue, newValue)->{
-	        	if (newValue.isEmpty())this.b_creer.setDisable(true);
-	        });
+	        	if (newValue.isEmpty()) this.b_creer.setDisable(true);
+	        	else this.b_creer.setDisable(false);
+	        }
+		);
 	}
 
 	@Override
@@ -64,6 +69,12 @@ public class Launch_periodicite extends Application implements Initializable{
 				e.printStackTrace();
 				}
 		
+	}
+	
+	public void creation() {
+		Periodicite p = new Periodicite(0,this.tf_periodicite.getText());		
+		daos.getPeriodiciteDAO().create(p);	
+		lbl_display.setText(p.toString());
 	}
 
 }
