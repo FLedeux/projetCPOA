@@ -38,6 +38,7 @@ public class Test {
 			}
 		}while(Input != 6);
 		
+
 	}
 
 }

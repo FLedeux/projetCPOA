@@ -42,7 +42,7 @@
       </GridPane>
       <FlowPane alignment="CENTER" prefHeight="33.0" prefWidth="456.0">
          <children>
-            <Button   mnemonicParsing="false" onAction="#creation" text="Créer" />
+            <Button fx:id="b_creer" disable="true"  mnemonicParsing="false" onAction="#creation" text="Créer" />
          </children>
          <VBox.margin>
             <Insets />

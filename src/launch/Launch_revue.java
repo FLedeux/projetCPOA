@@ -95,13 +95,16 @@ public class Launch_revue extends Application implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
         this.cbb_perio.setItems( FXCollections.observableArrayList(daos.getPeriodiciteDAO().findAll()));		
+        
         tf_tarif.textProperty().addListener((observable, oldValue, newValue)->{
-    //regarder oldvalue.match() regex
-        	if (oldValue.isEmpty()) 
+        	try {
+        		Double.valueOf(newValue);
+        		if((!tf_titre.getText().isEmpty())&&(cbb_perio.getValue()!=null)) 
+            		this.b_creer.setDisable(false);
+        	}
+        	catch(Exception e) {
         		this.b_creer.setDisable(true);
-        	
-        	else if((!tf_titre.getText().isEmpty())&&(cbb_perio.getValue()!=null)) 
-        		this.b_creer.setDisable(false);
+        	}
         });
         
         tf_titre.textProperty().addListener((observable, oldValue, newValue)->{
@@ -112,6 +115,7 @@ public class Launch_revue extends Application implements Initializable {
         		this.b_creer.setDisable(false);	
         });
         
+        this.b_creer.setDisable(true);
         
 	}
 	
