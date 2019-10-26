@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+
+
+<VBox maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="436.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="launch.mainframe">
+   <children>
+      <MenuBar>
+        <menus>
+          <Menu mnemonicParsing="false" text="Choix de la table">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#abonnement_click" text="Abonnement" />
+                  <MenuItem mnemonicParsing="false" onAction="#client_click" text="Client" />
+                  <MenuItem mnemonicParsing="false" onAction="#Periodicite_click" text="Périodicité" />
+                  <MenuItem mnemonicParsing="false" onAction="#Revue_click" text="Revue" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Methode de traitement">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#MySQL_click" text="MySQL" />
+                  <MenuItem mnemonicParsing="false" onAction="#ListeMemoire_click" text="Liste Mémoire" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <FlowPane prefHeight="458.0" prefWidth="600.0" />
+   </children>
+</VBox>

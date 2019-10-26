@@ -97,12 +97,12 @@ public class Launch_revue extends Application implements Initializable {
         this.cbb_perio.setItems( FXCollections.observableArrayList(daos.getPeriodiciteDAO().findAll()));		
         
         tf_tarif.textProperty().addListener((observable, oldValue, newValue)->{
-        	try {
+        	try {//regarde si on peut convertir ce qui est dans tf_tarif en double
         		Double.valueOf(newValue);
         		if((!tf_titre.getText().isEmpty())&&(cbb_perio.getValue()!=null)) 
             		this.b_creer.setDisable(false);
         	}
-        	catch(Exception e) {
+        	catch(Exception e) {//si il peut pas, on ne peut pas creer
         		this.b_creer.setDisable(true);
         	}
         });

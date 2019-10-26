@@ -30,7 +30,7 @@ public class Launch_periodicite extends Application implements Initializable{
 	public static void main(String[] args) {
 		System.out.println("s�l�ctionner le mode de donn�es : 1 pour Liste M�moire, 2 pour SQL");
 		int i=0;
-		Scanner sc = new Scanner(System.in);
+		Scanner sc = new Scanner(System.in);	
 		do {
 			i=sc.nextInt();
 		} while(i!=1&&i!=2);
