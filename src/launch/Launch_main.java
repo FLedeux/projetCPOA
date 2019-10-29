@@ -74,24 +74,50 @@ public class Launch_main extends Application{
 	}
 	
 	public void client_click() {
-		//TODO
-		System.out.println("client");
+		try {
+			URL fxmlURL=getClass().getResource("../fxml/clientframe.fxml");
+			FXMLLoader fxmlLoader = new FXMLLoader(fxmlURL);
+			VBox e = fxmlLoader.load();
+			this.vbox_container.getChildren().clear();
+			this.vbox_container.getChildren().add(e);
+		}
+		catch(IOException e) {
+			System.out.println(e);
+		}
 
 	}
 	
 	public void Periodicite_click() {
-		//TODO
-		System.out.println("perio");
+		try {
+			URL fxmlURL=getClass().getResource("../fxml/periodiciteframe.fxml");
+			FXMLLoader fxmlLoader = new FXMLLoader(fxmlURL);
+			VBox e = fxmlLoader.load();
+			this.vbox_container.getChildren().clear();
+			this.vbox_container.getChildren().add(e);
+		}
+		catch(IOException e) {
+			System.out.println(e);
+		}
 
 	}
 	
 	public void Revue_click() {
-		//TODO
-		System.out.println("revue");
+		try {
+			URL fxmlURL=getClass().getResource("../fxml/revueframe.fxml");
+			FXMLLoader fxmlLoader = new FXMLLoader(fxmlURL);
+			VBox e = fxmlLoader.load();
+			this.vbox_container.getChildren().clear();
+			this.vbox_container.getChildren().add(e);
+		}
+		catch(IOException e) {
+			System.out.println(e);
+		}
 
 	}
 	
-	
+	public static DAOFactory getdaos() {
+		return daos;
+	}
 	
 	
 	

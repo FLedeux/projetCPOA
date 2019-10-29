@@ -3,7 +3,8 @@ package launch;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 
-public class Launch_displayabo{
+public class Revueframe {
+
 	@FXML VBox vbox_ajout;
 
 }
