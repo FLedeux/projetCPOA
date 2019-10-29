@@ -3,11 +3,9 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="436.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="launch.mainframe">
+<VBox maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="436.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="launch.Launch_main">
    <children>
       <MenuBar>
         <menus>
@@ -21,12 +19,12 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Methode de traitement">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#MySQL_click" text="MySQL" />
-                  <MenuItem mnemonicParsing="false" onAction="#ListeMemoire_click" text="Liste Mémoire" />
+              <MenuItem fx:id="mi_sql" disable="true" mnemonicParsing="false" onAction="#MySQL_click" text="MySQL" />
+              <MenuItem fx:id="mi_liste" mnemonicParsing="false" onAction="#ListeMemoire_click" text="Liste Mémoire" />
             </items>
           </Menu>
         </menus>
       </MenuBar>
-      <FlowPane prefHeight="458.0" prefWidth="600.0" />
+      <VBox fx:id="vbox_container" prefHeight="518.0" prefWidth="600.0" />
    </children>
 </VBox>

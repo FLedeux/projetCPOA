@@ -1,0 +1,99 @@
+package launch;
+
+import java.io.IOException;
+import java.net.URL;
+
+import factory.DAOFactory;
+import factory.Persistance;
+import javafx.application.Application;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.MenuItem;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+public class Launch_main extends Application{
+	
+	@FXML private MenuItem mi_sql;
+	@FXML private MenuItem mi_liste;
+	@FXML private VBox vbox_container;
+	private static DAOFactory daos;
+
+	
+	public static void main(String[] args) {
+		daos = DAOFactory.getDAOFactory(Persistance.MYSQL);
+		launch(args);
+
+	}
+	
+	
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		try {
+			URL fxmlURL=getClass().getResource("../fxml/mainframe.fxml");
+			FXMLLoader fxmlLoader = new FXMLLoader(fxmlURL);
+			Node root = fxmlLoader.load();
+			Scene scene = new Scene((VBox) root, 600, 400);
+			primaryStage.setScene(scene);
+			primaryStage.setTitle("Gestion des periodicites");
+			primaryStage.show();
+			
+			} catch (Exception e) {
+				e.printStackTrace();
+			}		
+	}
+	
+	
+	public void MySQL_click() {
+		this.daos = DAOFactory.getDAOFactory(Persistance.MYSQL);
+		this.mi_sql.setDisable(true);
+		this.mi_liste.setDisable(false);
+	}
+	
+	public void ListeMemoire_click() {
+		this.daos = DAOFactory.getDAOFactory(Persistance.ListeMemoire);
+		this.mi_liste.setDisable(true);
+		this.mi_sql.setDisable(false);
+	}
+	
+	
+	public void abonnement_click() {
+		try {
+			URL fxmlURL=getClass().getResource("../fxml/abonnementframe.fxml");
+			FXMLLoader fxmlLoader = new FXMLLoader(fxmlURL);
+			VBox e = fxmlLoader.load();
+			this.vbox_container.getChildren().clear();
+			this.vbox_container.getChildren().add(e);
+		}
+		catch(IOException e) {
+			System.out.println(e);
+		}
+	}
+	
+	public void client_click() {
+		//TODO
+		System.out.println("client");
+
+	}
+	
+	public void Periodicite_click() {
+		//TODO
+		System.out.println("perio");
+
+	}
+	
+	public void Revue_click() {
+		//TODO
+		System.out.println("revue");
+
+	}
+	
+	
+	
+	
+	
+
+}
