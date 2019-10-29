@@ -145,4 +145,9 @@ public class ListeMemoireClientDAO implements ClientDAO{
 		return array;
 	}
 
+	@Override
+	public ArrayList<Client> findAll() {
+		return this.donnees;
+	}
+
 }

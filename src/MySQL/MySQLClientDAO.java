@@ -259,4 +259,26 @@ private static MySQLClientDAO instance;
 				}
 	}
 
+	@Override
+	public ArrayList<Client> findAll() {
+		try {
+			
+			Connection laConnexion = Connexion.creeConnexion();
+			PreparedStatement requete = laConnexion.prepareStatement("Select * From Client");
+			ResultSet res = requete.executeQuery();
+			ArrayList<Client> array = new ArrayList<Client>();
+			
+			while (res.next()) {
+				array.add(new Client(res.getInt("id_client"),res.getString("nom"),res.getString("prenom"),res.getString("no_rue"),res.getString("voie"),res.getString("code_postal"),res.getString("ville"),res.getString("pays")));
+			}
+			if (requete != null)requete.close();
+			if (laConnexion != null)laConnexion.close();
+			return array;
+			
+			}catch(SQLException sqle) {
+				System.out.println("Pb select" + sqle.getMessage());
+				return null;
+			}
+	}
+
 }

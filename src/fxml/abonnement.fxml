@@ -11,8 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox maxHeight="400.0" maxWidth="600.0" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" spacing="20.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="400.0" maxWidth="600.0" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="launch.Launch_abonnement">
    <children>
       <GridPane prefHeight="367.0" prefWidth="560.0">
         <columnConstraints>
@@ -26,10 +25,10 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <DatePicker fx:id="dtp_fin" onAction="#check_date" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <DatePicker fx:id="dtp_debut" onAction="#check_date" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <ComboBox fx:id="cbb_revue" onAction="#check_cbb" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <ComboBox fx:id="cbb_client" onAction="#check_cbb" prefWidth="150.0" GridPane.columnIndex="1" />
+            <ComboBox fx:id="cbb_client" onAction="#check" prefWidth="150.0" GridPane.columnIndex="1" />
+            <ComboBox fx:id="cbb_revue" onAction="#check" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <DatePicker fx:id="dp_debut" onAction="#check" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <DatePicker fx:id="dp_fin" onAction="#check" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label text="Client : " />
             <Label text="Revue : " GridPane.rowIndex="1" />
             <Label text="Date de début : " GridPane.rowIndex="2" />
@@ -38,7 +37,7 @@
       </GridPane>
       <FlowPane alignment="CENTER" prefHeight="200.0" prefWidth="200.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#creation" text="Creer" />
+            <Button fx:id="b_creer" disable="true" mnemonicParsing="false" onAction="#creation" text="Creer" />
          </children>
       </FlowPane>
       <FlowPane alignment="CENTER" prefHeight="200.0" prefWidth="200.0">

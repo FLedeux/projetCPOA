@@ -108,4 +108,9 @@ public class ListeMemoireRevueDAO implements RevueDAO{
 		
 	}
 
+	@Override
+	public ArrayList<Revue> findAll() {
+	return this.donnees;
+	}
+
 }
