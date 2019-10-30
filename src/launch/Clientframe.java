@@ -54,6 +54,8 @@ public class Clientframe implements Initializable{
 		    	b_modifier.setDisable(false);
 		    	b_supprimer.setDisable(false);
 		    	c = this.tableau.getSelectionModel().getSelectedItem();
+		    	if(Client_option.getb_recherche_abonnement()!=null)
+		    		Client_option.getb_recherche_abonnement().setDisable(false);
 		    }
 		});		
 	}
