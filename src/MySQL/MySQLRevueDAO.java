@@ -35,7 +35,7 @@ public class MySQLRevueDAO implements RevueDAO{
 			requete.setString(2, revue.getDescription());
 			requete.setDouble(3, revue.getTarif_numero());
 			requete.setString(4, revue.getVisuel());
-			requete.setInt(5, revue.getperio().getId());
+			requete.setInt(5, revue.getPerio().getId());
 			int res = requete.executeUpdate();
 			
 			if (res == 1) {
@@ -66,7 +66,7 @@ public class MySQLRevueDAO implements RevueDAO{
 			requete.setString(2, revue.getDescription());
 			requete.setDouble(3, revue.getTarif_numero());
 			requete.setString(4, revue.getVisuel());
-			requete.setInt(5, revue.getperio().getId());
+			requete.setInt(5, revue.getPerio().getId());
 			requete.setInt(6, revue.getId());
 			
 			int res = requete.executeUpdate();
@@ -175,7 +175,7 @@ public class MySQLRevueDAO implements RevueDAO{
 		try {
 			Connection laConnexion = Connexion.creeConnexion();
 			PreparedStatement requete = laConnexion.prepareStatement("Select * From Revue, Periodicite Where Revue.id_periodicite=? AND Revue.id_periodicite=Periodicite.id_periodicite");
-			requete.setInt(1,revue.getperio().getId());
+			requete.setInt(1,revue.getPerio().getId());
 			ResultSet res = requete.executeQuery();
 			
 

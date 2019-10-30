@@ -1,8 +1,5 @@
 package metier;
 
-import java.util.Scanner;
-
-import factory.DAOFactory;
 import liste_memoire.ListeMemoireClientDAO;
 
 public class Client implements Comparable<Client>{

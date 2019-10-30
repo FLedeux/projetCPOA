@@ -1,8 +1,5 @@
 package metier;
 
-import java.util.Scanner;
-
-import factory.DAOFactory;
 
 public class Periodicite {
 

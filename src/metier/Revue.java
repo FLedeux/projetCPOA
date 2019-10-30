@@ -1,8 +1,5 @@
 package metier;
 
-import java.util.Scanner;
-
-import factory.DAOFactory;
 
 public class Revue {
 	private int id;
@@ -10,7 +7,7 @@ public class Revue {
 	private String description;
 	private double tarif_numero;
 	private String visuel;
-	private Periodicite  perio;
+	private Periodicite perio;
 	private int quantite;
 	
 	public Revue(int id, String titre,String description,double tarif_numero,String visuel,Periodicite perio) {
@@ -19,8 +16,19 @@ public class Revue {
 		this.setDescription(description);
 		this.setTarif_numero(tarif_numero);
 		this.setVisuel(visuel);
-		this.setperio(perio);
+		this.setPerio(perio);
 
+	}
+	
+
+	public Revue(int id, String titre,String description,double tarif_numero,String visuel,Periodicite perio, int quantite) {
+		this.setId(id);
+		this.setTitre(titre);
+		this.setDescription(description);
+		this.setTarif_numero(tarif_numero);
+		this.setVisuel(visuel);
+		this.setPerio(perio);
+		this.setQuantite(quantite);
 	}
 
 	public int getId() {
@@ -63,13 +71,15 @@ public class Revue {
 		this.visuel = visuel;
 	}
 
-	public Periodicite getperio() {
+	public Periodicite getPerio() {
 		return perio;
 	}
 
-	public void setperio(Periodicite perio) {
+
+	public void setPerio(Periodicite perio) {
 		this.perio = perio;
 	}
+
 
 	public int getQuantite() {
 		return quantite;

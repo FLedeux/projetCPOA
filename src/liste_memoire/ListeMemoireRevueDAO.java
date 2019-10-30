@@ -100,7 +100,7 @@ public class ListeMemoireRevueDAO implements RevueDAO{
 		int i=0;
 		ArrayList<Revue> array = new ArrayList<Revue>();
 		while(i<this.donnees.size()) {
-			if (this.donnees.get(i).getperio().getId()==revue.getperio().getId()) {
+			if (this.donnees.get(i).getPerio().getId()==revue.getPerio().getId()) {
 				array.add(this.donnees.get(i));
 			}
 			i++;
