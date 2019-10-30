@@ -56,7 +56,25 @@ private static MySQLClientDAO instance;
 	public boolean create(Client client) {
 		try {
 			Connection laConnexion = Connexion.creeConnexion();
-			PreparedStatement requete = laConnexion.prepareStatement("insert into Client (nom, prenom, no_rue, voie, code_postal, ville, pays) values(?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+			
+			PreparedStatement requete = laConnexion.prepareStatement("Select count(*) from Periodicite where nom = ? AND prenom = ? AND no_rue = ? AND voie = ? AND code_postal = ? AND ville = ? AND pays = ?");
+			requete.setString(1, client.getNom());
+			requete.setString(2, client.getPrenom());
+			requete.setString(3, client.getNo_rue());
+			requete.setString(4, client.getVoie());
+			requete.setString(5, client.getCode_postal());
+			requete.setString(6, client.getVille());
+			requete.setString(7, client.getPays());
+			
+			ResultSet result = requete.executeQuery();
+			result.next();
+			if (result.getInt(1)>0) {
+				throw (new IllegalArgumentException("Ce client existe déjà"));
+			}
+			
+			
+			
+			requete = laConnexion.prepareStatement("insert into Client (nom, prenom, no_rue, voie, code_postal, ville, pays) values(?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 			requete.setString(1, client.getNom());
 			requete.setString(2, client.getPrenom());
 			requete.setString(3, client.getNo_rue());
@@ -88,7 +106,24 @@ private static MySQLClientDAO instance;
 	public boolean update(Client client) {
 		try {
 			Connection laConnexion = Connexion.creeConnexion();
-			PreparedStatement requete = laConnexion.prepareStatement("update Client set nom=?,prenom=?,no_rue=?, voie=?,code_postal=?,ville=?,pays=?  where id_client=?");
+			
+			PreparedStatement requete = laConnexion.prepareStatement("Select count(*) from Periodicite where nom = ? AND prenom = ? AND no_rue = ? AND voie = ? AND code_postal = ? AND ville = ? AND pays = ?");
+			requete.setString(1, client.getNom());
+			requete.setString(2, client.getPrenom());
+			requete.setString(3, client.getNo_rue());
+			requete.setString(4, client.getVoie());
+			requete.setString(5, client.getCode_postal());
+			requete.setString(6, client.getVille());
+			requete.setString(7, client.getPays());
+			
+			ResultSet result = requete.executeQuery();
+			result.next();
+			if (result.getInt(1)>0) {
+				throw (new IllegalArgumentException("Ce client existe déjà"));
+			}
+			
+			
+			requete = laConnexion.prepareStatement("update Client set nom=?,prenom=?,no_rue=?, voie=?,code_postal=?,ville=?,pays=?  where id_client=?");
 			requete.setString(1, client.getNom());
 			requete.setString(2, client.getPrenom());
 			requete.setString(3, client.getNo_rue());
@@ -118,7 +153,17 @@ private static MySQLClientDAO instance;
 	public boolean delete(Client client) {
 		try {
 			Connection laConnexion = Connexion.creeConnexion();
-			PreparedStatement requete = laConnexion.prepareStatement("delete from Client where id_client=?");
+			
+			PreparedStatement requete = laConnexion.prepareStatement("Select count(*) from Abonnement where id_client = ?");
+			requete.setInt(1,client.getId());
+			ResultSet result = requete.executeQuery();
+			result.next();
+			if (result.getInt(1)>0) {
+				throw (new IllegalArgumentException("Impossible de supprimer une périodicité utilisé autre part"));
+			}
+			
+			
+			requete = laConnexion.prepareStatement("delete from Client where id_client=?");
 			requete.setInt(1, client.getId());
 			int res = requete.executeUpdate();
 			if (requete != null)requete.close();

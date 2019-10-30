@@ -25,8 +25,8 @@ public class Periodiciteframe implements Initializable{
 	@FXML private Button b_supprimer;
 	private static boolean modification=false;
 	private static Periodicite p;
-	private static VBox vboxtest;
-	private static TableView<Periodicite> tableviewtest;
+	private static VBox vbox_interaction;
+	private static TableView<Periodicite> tableau_interaction;
 	
 	
 	
@@ -50,8 +50,8 @@ public class Periodiciteframe implements Initializable{
 		VBox vboxset = fxmlLoader.load();
 		this.vbox_ajout.getChildren().clear();
 		this.vbox_ajout.getChildren().add(vboxset);
-		vboxtest=this.vbox_ajout;
-		tableviewtest=this.tableau;
+		vbox_interaction=this.vbox_ajout;
+		tableau_interaction=this.tableau;
 	}
 	
 	public void open_ajout() {
@@ -104,11 +104,11 @@ public class Periodiciteframe implements Initializable{
 	}
 	
 	public static TableView<Periodicite> gettableview(){
-		return tableviewtest;
+		return tableau_interaction;
 	}
 	
 	public static VBox getvbox() {
-		return vboxtest;
+		return vbox_interaction;
 	}
 	
 	

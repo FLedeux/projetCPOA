@@ -122,12 +122,13 @@ public class MySQLPeriodiciteDAO implements PeriodiciteDAO{
 	public boolean delete(Periodicite periodicite) {
 		try {
 			Connection laConnexion = Connexion.creeConnexion();
+			
 			PreparedStatement requete = laConnexion.prepareStatement("Select count(*) from Revue where id_periodicite = ?");
 			requete.setString(1,periodicite.getNom());
 			ResultSet result = requete.executeQuery();
 			result.next();
 			if (result.getInt(1)>0) {
-				throw (new IllegalArgumentException("Cette periodicite existe déjà"));
+				throw (new IllegalArgumentException("Impossible de supprimer une périodicité utilisé autre part"));
 			}
 			
 			requete = laConnexion.prepareStatement("delete from Periodicite where id_periodicite=?");

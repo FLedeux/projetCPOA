@@ -2,23 +2,15 @@ package launch;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Scanner;
 
-import factory.DAOFactory;
-import factory.Persistance;
-import javafx.application.Application;
+
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import metier.Periodicite;
 
 public class Launch_periodicite  implements Initializable{
@@ -26,6 +18,7 @@ public class Launch_periodicite  implements Initializable{
 	@FXML private TextField tf_periodicite;
 	@FXML private Button b_creer;
 	@FXML private Label lbl_display;
+	private Periodicite p;
 	
 	
 	
@@ -38,7 +31,8 @@ public class Launch_periodicite  implements Initializable{
 	        }
 		);
 		if(Periodiciteframe.getmodification()) {
-			this.tf_periodicite.setText(Periodiciteframe.getselecteditem().getNom());
+			this.p=Periodiciteframe.getselecteditem();
+			this.tf_periodicite.setText(p.getNom());
 			this.b_creer.setText("modifier");
 		}
 	}
@@ -47,7 +41,7 @@ public class Launch_periodicite  implements Initializable{
 	public void creation() {
 		try {
 			if(Periodiciteframe.getmodification()) {
-				Periodicite p = new Periodicite(Periodiciteframe.getselecteditem().getId(),this.tf_periodicite.getText());
+				Periodicite p = new Periodicite(this.p.getId(),this.tf_periodicite.getText());
 				Launch_main.getdaos().getPeriodiciteDAO().update(p);
 			}
 			else {

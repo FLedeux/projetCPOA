@@ -21,8 +21,8 @@
                   <TableColumn fx:id="colnum_rue" prefWidth="93.0" text="Numéro de rue" />
                   <TableColumn fx:id="colnom_rue" prefWidth="93.0" text="Nom de la rue" />
                   <TableColumn fx:id="colcode_postal" prefWidth="72.0" text="Code postal" />
-                  <TableColumn fx:id="col_ville" prefWidth="99.0" text="Ville" />
-                  <TableColumn fx:id="col_pays" prefWidth="113.0" text="Pays" />
+                  <TableColumn fx:id="colville" prefWidth="99.0" text="Ville" />
+                  <TableColumn fx:id="colpays" prefWidth="113.0" text="Pays" />
               </columns>
             </TableView>
          </children>
@@ -39,8 +39,8 @@
         </rowConstraints>
          <children>
             <Button alignment="CENTER" mnemonicParsing="false" onAction="#open_ajout" text="ajouter" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Button fx:id="b_modifier" mnemonicParsing="false" onAction="#open_modifier" prefHeight="26.0" prefWidth="106.0" text="modifier" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Button fx:id="b_supprimer" mnemonicParsing="false" onAction="#supprimer" prefHeight="26.0" prefWidth="82.0" text="supprimer" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button fx:id="b_modifier" disable="true" mnemonicParsing="false" onAction="#open_modifier" prefHeight="26.0" prefWidth="106.0" text="modifier" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button fx:id="b_supprimer" disable="true" mnemonicParsing="false" onAction="#supprimer" prefHeight="26.0" prefWidth="82.0" text="supprimer" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <Button fx:id="b_option" mnemonicParsing="false" onAction="#open_option" text="plus d'option" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
          </children>
       </GridPane>

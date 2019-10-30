@@ -96,9 +96,9 @@ public class Client {
 		if (getClass() != obj.getClass())
 			return false;
 		Client other = (Client) obj;
-		if (id != other.id)
-			return false;
-		return true;
+		if ((id == other.id)||((nom==other.nom)&&(prenom==other.prenom)&&(no_rue==other.no_rue)&&(voie==other.voie)&&(code_postal==other.code_postal)&&(ville==other.ville)&&(pays==other.pays)))
+			return true;
+		return false;
 	}
 	
 	

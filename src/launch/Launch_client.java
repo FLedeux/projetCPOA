@@ -14,10 +14,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -25,7 +27,7 @@ import metier.Client;
 import metier.Periodicite;
 import metier.Revue;
 
-public class Launch_client  extends Application implements Initializable {
+public class Launch_client implements Initializable {
 
 	@FXML	private Label lbl_display;
 	@FXML	private TextField  tf_nom;
@@ -36,52 +38,51 @@ public class Launch_client  extends Application implements Initializable {
 	@FXML	private TextField  tf_ville;
 	@FXML	private TextField  tf_pays;
 	@FXML 	private Button b_creer;
-			private static DAOFactory daos;
-		
-		
-		
-		@Override 
-		public void start(Stage primaryStage) {
-			try {
-				URL fxmlURL=getClass().getResource("../fxml/client.fxml");
-				FXMLLoader fxmlLoader = new FXMLLoader(fxmlURL);
-				Node root = fxmlLoader.load();
-				Scene scene = new Scene((VBox) root, 600, 400);
-				primaryStage.setScene(scene);
-				primaryStage.setTitle("Gestion des revues");
-				primaryStage.show();
-				} catch (Exception e) {
-					e.printStackTrace();
-					}
-			}
-		
-		
-		
-		
-		public static void main(String[] args) {
-			System.out.println("s�l�ctionner le mode de donn�es : 1 pour Liste M�moire, 2 pour SQL");
-			int i=0;
-			Scanner sc = new Scanner(System.in);
-			do {
-				i=sc.nextInt();
-			} while(i!=1&&i!=2);
-			if(i==1) daos = DAOFactory.getDAOFactory(Persistance.ListeMemoire);
-			else daos = DAOFactory.getDAOFactory(Persistance.MYSQL);
-			launch(args);
-
-		}
-
+			private Client c;
 		
 		public void creation() {
-			Client c = new Client(0,this.tf_nom.getText(),this.tf_prenom.getText(),this.tf_num.getText(),this.tf_nom_rue.getText(),this.tf_code_postal.getText(),this.tf_ville.getText(),this.tf_pays.getText());
-			daos.getClientDAO().create(c);
-			lbl_display.setText(c.toString());
+			//TODO manque la partie check si duplicata
+			try {
+				if(Clientframe.getmodification()) {
+					Client c = new Client(this.c.getId(),this.tf_nom.getText(),this.tf_prenom.getText(),this.tf_num.getText(),this.tf_nom_rue.getText(),this.tf_code_postal.getText(),this.tf_ville.getText(),this.tf_pays.getText());
+					Launch_main.getdaos().getClientDAO().update(c);
+				}
+				else {
+					Client c = new Client(0,this.tf_nom.getText(),this.tf_prenom.getText(),this.tf_num.getText(),this.tf_nom_rue.getText(),this.tf_code_postal.getText(),this.tf_ville.getText(),this.tf_pays.getText());
+					Launch_main.getdaos().getClientDAO().create(c);	
+					lbl_display.setText(c.toString());
+				}
+			}
+			catch(Exception e) {
+		        Alert alert = new Alert(AlertType.INFORMATION);
+		        if(Periodiciteframe.getmodification())
+		        	alert.setTitle("tentative de modification");
+		        else alert.setTitle("tentative d'ajout");
+		        alert.setHeaderText(null);
+		        alert.setContentText(e.getMessage()); 
+		        alert.showAndWait();
+			}
+			Clientframe.gettableview().getItems().clear();//recharge le tableau
+			Clientframe.gettableview().getItems().addAll(Launch_main.getdaos().getClientDAO().findAll());
+			if(Clientframe.getmodification()) {
+				Clientframe.getvbox().getChildren().clear();
+			}
+			else {
+				this.tf_nom.setText("");
+				this.tf_prenom.setText("");
+				this.tf_num.setText("");
+				this.tf_nom_rue.setText("");
+				this.tf_code_postal.setText("");
+				this.tf_ville.setText("");
+				this.tf_pays.setText("");
+			}
+
 		}
 
 		@Override
 		public void initialize(URL arg0, ResourceBundle arg1) {
 	        this.tf_nom.textProperty().addListener((observable, oldValue, newValue)->{
-	        	if (newValue.isEmpty()||this.check_un_vide(this.tf_nom))
+	        	if (newValue.isEmpty()||this.check_un_vide(this.tf_nom))//regarde si tous le schamps autre que celui qui a une nouvelle valeur sont vide+ la nouvelle valeur
 	        		this.b_creer.setDisable(true);
 	        	
 	        	else if(!this.check_un_vide()) //si tous les champs sont rempli
@@ -89,7 +90,7 @@ public class Launch_client  extends Application implements Initializable {
 	        });
 	        
 	        this.tf_prenom.textProperty().addListener((observable, oldValue, newValue)->{
-	        	if (newValue.isEmpty()||this.check_un_vide(this.tf_prenom))
+	        	if (newValue.isEmpty()||this.check_un_vide(this.tf_prenom))//regarde si tous le schamps autre que celui qui a une nouvelle valeur sont vide+ la nouvelle valeur
 	        		this.b_creer.setDisable(true);
 	        	
 	        	else if(!this.check_un_vide()) //si tous les champs sont rempli
@@ -97,7 +98,7 @@ public class Launch_client  extends Application implements Initializable {
 	        });
 	        
 	        this.tf_num.textProperty().addListener((observable, oldValue, newValue)->{
-	        	if (newValue.isEmpty()||this.check_un_vide(this.tf_num))
+	        	if (newValue.isEmpty()||this.check_un_vide(this.tf_num))//regarde si tous le schamps autre que celui qui a une nouvelle valeur sont vide+ la nouvelle valeur
 	        		this.b_creer.setDisable(true);
 	        	
 	        	else if(!this.check_un_vide()) //si tous les champs sont rempli
@@ -105,7 +106,7 @@ public class Launch_client  extends Application implements Initializable {
 	        });
 	        
 	        this.tf_nom_rue.textProperty().addListener((observable, oldValue, newValue)->{
-	        	if (newValue.isEmpty()||this.check_un_vide(this.tf_nom_rue))
+	        	if (newValue.isEmpty()||this.check_un_vide(this.tf_nom_rue))//regarde si tous le schamps autre que celui qui a une nouvelle valeur sont vide+ la nouvelle valeur
 	        		this.b_creer.setDisable(true);
 	        	
 	        	else if(!this.check_un_vide()) //si tous les champs sont rempli
@@ -113,7 +114,7 @@ public class Launch_client  extends Application implements Initializable {
 	        });
 	        
 	        this.tf_code_postal.textProperty().addListener((observable, oldValue, newValue)->{
-	        	if (newValue.isEmpty()||this.check_un_vide(this.tf_code_postal))
+	        	if (newValue.isEmpty()||this.check_un_vide(this.tf_code_postal))//regarde si tous le schamps autre que celui qui a une nouvelle valeur sont vide+ la nouvelle valeur
 	        		this.b_creer.setDisable(true);
 	        	
 	        	else if(!this.check_un_vide()) //si tous les champs sont rempli
@@ -121,7 +122,7 @@ public class Launch_client  extends Application implements Initializable {
 	        });
 	        
 	        this.tf_ville.textProperty().addListener((observable, oldValue, newValue)->{
-	        	if (newValue.isEmpty()||this.check_un_vide(this.tf_ville))
+	        	if (newValue.isEmpty()||this.check_un_vide(this.tf_ville))//regarde si tous le schamps autre que celui qui a une nouvelle valeur sont vide+ la nouvelle valeur
 	        		this.b_creer.setDisable(true);
 	        	
 	        	else if(!this.check_un_vide()) //si tous les champs sont rempli
@@ -129,16 +130,27 @@ public class Launch_client  extends Application implements Initializable {
 	        });
 	        
 	        this.tf_pays.textProperty().addListener((observable, oldValue, newValue)->{
-	        	if (newValue.isEmpty()||this.check_un_vide(this.tf_pays))
+	        	if (newValue.isEmpty()||this.check_un_vide(this.tf_pays))//regarde si tous le schamps autre que celui qui a une nouvelle valeur sont vide+ la nouvelle valeur
 	        		this.b_creer.setDisable(true);
 	        	
 	        	else if(!this.check_un_vide()) //si tous les champs sont rempli
 	        		this.b_creer.setDisable(false);	
 	        });
+	        
+	        if(Clientframe.getmodification()) {
+	        	c = Clientframe.getselecteditem();
+	        	this.tf_nom.setText(this.c.getNom());
+	        	this.tf_prenom.setText(this.c.getPrenom());
+	        	this.tf_num.setText(this.c.getNo_rue());
+	        	this.tf_nom_rue.setText(this.c.getVoie());
+	        	this.tf_code_postal.setText(this.c.getCode_postal());
+	        	this.tf_ville.setText(this.c.getVille());
+	        	this.tf_pays.setText(this.c.getPays());
+	        }
 		}
 		
 		public boolean check_un_vide(TextField non_check) {
-			boolean test=false;;
+			boolean test=false;
 			if (this.tf_code_postal!=non_check) {
 				test= test||this.tf_code_postal.getText().isEmpty();
 			}
