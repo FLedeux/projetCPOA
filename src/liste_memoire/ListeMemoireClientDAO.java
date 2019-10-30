@@ -1,6 +1,7 @@
 package liste_memoire;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import dao.ClientDAO;
 import factory.DAOFactory;
@@ -15,6 +16,8 @@ public class ListeMemoireClientDAO implements ClientDAO{
 	private static ListeMemoireClientDAO instance;
 
 	private ArrayList<Client> donnees;
+	
+	private static boolean methodecomp;//true=prise en compte de la ville false =seulement alphabétique
 	
 	
 	public static ListeMemoireClientDAO getInstance() {
@@ -174,4 +177,38 @@ public class ListeMemoireClientDAO implements ClientDAO{
 		return this.donnees;
 	}
 
+	
+	@Override
+	public ArrayList<Client> GetByNom(Client client) {
+		int i=0;
+		ArrayList<Client> array = new ArrayList<Client>();
+		while(i<this.donnees.size()) {
+			if (this.donnees.get(i).getNom()==client.getNom()) {
+				array.add(this.donnees.get(i));
+			}
+			i++;
+		}
+		return array;
+	}
+
+	@Override
+	public ArrayList<Client> Trie_Alphabetique() {
+		this.methodecomp=false;
+		ArrayList<Client> donnees = this.donnees;
+		Collections.sort(donnees);//regarder pour faire uen autre class de comparateur pour un coup ville et pour l'autre coup: plus propre
+		return donnees;
+	}
+
+	@Override
+	public ArrayList<Client> Trie_Ville() {
+		this.methodecomp=true;
+		ArrayList<Client> donnees = this.donnees;
+		Collections.sort(donnees);//regarder pour faire uen autre class de comparateur pour un coup ville et pour l'autre coup: plus propre
+		return donnees;
+	}
+
+	public static boolean getmethodecomp() {
+		return methodecomp;
+	}
+	
 }

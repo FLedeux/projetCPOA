@@ -326,4 +326,28 @@ private static MySQLClientDAO instance;
 			}
 	}
 
+	@Override
+	public ArrayList<Client> GetByNom(Client client) {
+		try {
+			Connection laConnexion = Connexion.creeConnexion();
+			PreparedStatement requete = laConnexion.prepareStatement("Select * From Client Where nom=?");
+			requete.setString(1,client.getNom());
+			ResultSet res = requete.executeQuery();
+			
+			ArrayList<Client> Liste = new ArrayList<Client>();
+			
+			while (res.next()) {
+				Liste.add(new Client(res.getInt("id_client"),res.getString("nom"),res.getString("prenom"),res.getString("no_rue"),res.getString("voie"),res.getString("code_postal"),res.getString("ville"),res.getString("pays")));
+				}
+			if (requete != null)requete.close();
+			if (laConnexion != null)laConnexion.close();
+			return Liste;
+			
+			}
+			catch (SQLException sqle) {
+				System.out.println("Pb select" + sqle.getMessage());
+				return null;
+				}
+	}
+
 }

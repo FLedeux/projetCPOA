@@ -3,8 +3,9 @@ package metier;
 import java.util.Scanner;
 
 import factory.DAOFactory;
+import liste_memoire.ListeMemoireClientDAO;
 
-public class Client {
+public class Client implements Comparable<Client>{
 	private int id;
 	private String nom;
 	private String prenom;
@@ -235,6 +236,24 @@ public class Client {
 		String pays= sc.nextLine();
 		return new Client(0,"","","","","","",pays);
 	
+	}
+
+	@Override
+	public int compareTo(Client arg0) {
+		int value;
+		
+		if(ListeMemoireClientDAO.getmethodecomp()) {//cas ou on veux que la liste sois trier en prenant compte de la ville
+			value = ville.compareTo(arg0.ville);
+			if(value!=0)
+				return value;
+		}
+		
+		value = nom.compareTo(arg0.nom);
+		if(value!=0)
+			return value;
+		
+		value=prenom.compareTo(arg0.prenom);
+		return value;
 	}
 	
 

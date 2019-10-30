@@ -11,5 +11,8 @@ public interface ClientDAO extends DAOGetByID<Client>{
 	public abstract ArrayList<Client> GetByCode_Postal(Client client);
 	public abstract ArrayList<Client> GetByVille(Client client);
 	public abstract ArrayList<Client> GetByPays(Client client);
+	public abstract ArrayList<Client> GetByNom(Client client);
+	public abstract ArrayList<Client> Trie_Alphabetique();
+	public abstract ArrayList<Client> Trie_Ville();
 	
 }
