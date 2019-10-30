@@ -69,7 +69,7 @@ public class Launch_revue extends Application implements Initializable {
 
 	
 	public void creation() {
-		Revue r = new Revue(0,tf_titre.getText(),tf_description.getText(),Double.valueOf(tf_tarif.getText()),tf_titre.getText()+".png",cbb_perio.getValue().getId());
+		Revue r = new Revue(0,tf_titre.getText(),tf_description.getText(),Double.valueOf(tf_tarif.getText()),tf_titre.getText()+".png",cbb_perio.getValue());
 		daos.getRevueDAO().create(r);
 		lbl_display.setText(r.toString());
 	}

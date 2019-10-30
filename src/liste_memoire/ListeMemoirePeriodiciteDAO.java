@@ -91,7 +91,7 @@ public class ListeMemoirePeriodiciteDAO implements PeriodiciteDAO{
 	@Override
 	public boolean delete(Periodicite object) {
 		
-		ArrayList<Revue> revue= DAOFactory.getDAOFactory(Persistance.ListeMemoire).getRevueDAO().GetByPerio(new Revue(0,"","",0,"",object.getId())); 
+		ArrayList<Revue> revue= DAOFactory.getDAOFactory(Persistance.ListeMemoire).getRevueDAO().GetByPerio(new Revue(0,"","",0,"",object)); 
 		
 		if(revue.size()!=0) {
 			throw new IllegalArgumentException("Impossible de supprimer une périodicité utiliser par une revue");

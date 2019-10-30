@@ -12,6 +12,7 @@ import factory.DAOFactory;
 import factory.Persistance;
 import metier.Abonnement;
 import metier.Client;
+import metier.Periodicite;
 import metier.Revue;
 
 class MySQLAbonnementDAOTest {
@@ -24,7 +25,7 @@ class MySQLAbonnementDAOTest {
 	@BeforeEach
 	public void before() {
 		c= new Client(0,"Jean","Jean","53","rue de Jean","57000","JeanVille","JeanLand");
-		r = new Revue(0,"jeanrevue","jean",3.5,"jean.pnj",1);
+		r = new Revue(0,"jeanrevue","jean",3.5,"jean.pnj",new Periodicite(1,"test"));
 		daos.getClientDAO().create(c);
 		daos.getRevueDAO().create(r);
 	}

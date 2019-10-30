@@ -28,7 +28,7 @@ class ListeMemoirePeriodiciteDAPTest {
 	@Test
 	void testGetById()
 	{
-		test = new Periodicite(0,"test");
+		test = new Periodicite(0,"testo");
 		this.daos.getPeriodiciteDAO().create(test);
 		assertEquals(this.daos.getPeriodiciteDAO().getById(test.getId()),test);
 	}
@@ -45,7 +45,7 @@ class ListeMemoirePeriodiciteDAPTest {
 	@Test
 	void test_update()
 	{
-		test = new Periodicite(0,"test");
+		test = new Periodicite(0,"testa");
 		this.daos.getPeriodiciteDAO().create(test);
 		Periodicite test2 = new Periodicite(test.getId(),"test2");
 		assertTrue(this.daos.getPeriodiciteDAO().update(test2));
@@ -54,7 +54,7 @@ class ListeMemoirePeriodiciteDAPTest {
 	@Test
 	void test_delete()
 	{
-		test = new Periodicite(0,"test");
+		test = new Periodicite(0,"teste");
 		this.daos.getPeriodiciteDAO().create(test);
 		assertTrue(this.daos.getPeriodiciteDAO().delete(test));
 	}

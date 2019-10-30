@@ -3,6 +3,7 @@ package liste_memoire;
 import java.util.ArrayList;
 
 import dao.RevueDAO;
+import metier.Periodicite;
 import metier.Revue;
 
 public class ListeMemoireRevueDAO implements RevueDAO{
@@ -31,7 +32,7 @@ public class ListeMemoireRevueDAO implements RevueDAO{
 	@Override
 	public Revue getById(int id) {
 		
-		int idx = this.donnees.indexOf(new Revue(id, "","",0,"",0));
+		int idx = this.donnees.indexOf(new Revue(id, "","",0,"",new Periodicite(0,"")));
 		if (idx == -1) {
 			throw new IllegalArgumentException("Aucun objet ne possède cet identifiant");
 		} else {
@@ -99,7 +100,7 @@ public class ListeMemoireRevueDAO implements RevueDAO{
 		int i=0;
 		ArrayList<Revue> array = new ArrayList<Revue>();
 		while(i<this.donnees.size()) {
-			if (this.donnees.get(i).getId_perio()==revue.getId_perio()) {
+			if (this.donnees.get(i).getperio().getId()==revue.getperio().getId()) {
 				array.add(this.donnees.get(i));
 			}
 			i++;

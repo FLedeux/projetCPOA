@@ -57,7 +57,7 @@ private static MySQLClientDAO instance;
 		try {
 			Connection laConnexion = Connexion.creeConnexion();
 			
-			PreparedStatement requete = laConnexion.prepareStatement("Select count(*) from Periodicite where nom = ? AND prenom = ? AND no_rue = ? AND voie = ? AND code_postal = ? AND ville = ? AND pays = ?");
+			PreparedStatement requete = laConnexion.prepareStatement("Select count(*) from Client where nom = ? AND prenom = ? AND no_rue = ? AND voie = ? AND code_postal = ? AND ville = ? AND pays = ?");
 			requete.setString(1, client.getNom());
 			requete.setString(2, client.getPrenom());
 			requete.setString(3, client.getNo_rue());
@@ -107,7 +107,7 @@ private static MySQLClientDAO instance;
 		try {
 			Connection laConnexion = Connexion.creeConnexion();
 			
-			PreparedStatement requete = laConnexion.prepareStatement("Select count(*) from Periodicite where nom = ? AND prenom = ? AND no_rue = ? AND voie = ? AND code_postal = ? AND ville = ? AND pays = ?");
+			PreparedStatement requete = laConnexion.prepareStatement("Select count(*) from Client where nom = ? AND prenom = ? AND no_rue = ? AND voie = ? AND code_postal = ? AND ville = ? AND pays = ?");
 			requete.setString(1, client.getNom());
 			requete.setString(2, client.getPrenom());
 			requete.setString(3, client.getNo_rue());

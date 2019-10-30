@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import dao.RevueDAO;
+import metier.Periodicite;
 import metier.Revue;
 
 public class MySQLRevueDAO implements RevueDAO{
@@ -34,7 +35,7 @@ public class MySQLRevueDAO implements RevueDAO{
 			requete.setString(2, revue.getDescription());
 			requete.setDouble(3, revue.getTarif_numero());
 			requete.setString(4, revue.getVisuel());
-			requete.setInt(5, revue.getId_perio());
+			requete.setInt(5, revue.getperio().getId());
 			int res = requete.executeUpdate();
 			
 			if (res == 1) {
@@ -65,7 +66,7 @@ public class MySQLRevueDAO implements RevueDAO{
 			requete.setString(2, revue.getDescription());
 			requete.setDouble(3, revue.getTarif_numero());
 			requete.setString(4, revue.getVisuel());
-			requete.setInt(5, revue.getId_perio());
+			requete.setInt(5, revue.getperio().getId());
 			requete.setInt(6, revue.getId());
 			
 			int res = requete.executeUpdate();
@@ -118,13 +119,13 @@ public class MySQLRevueDAO implements RevueDAO{
 	public Revue getById(int id) {
 		try {
 			Connection laConnexion = Connexion.creeConnexion();
-			PreparedStatement requete = laConnexion.prepareStatement("Select * From Revue Where id_revue=?");
+			PreparedStatement requete = laConnexion.prepareStatement("Select * From Revue, Periodicite Where id_revue=? AND Revue.id_periodicite=Periodicite.id_periodicite");
 			requete.setInt(1,id);
 			ResultSet res = requete.executeQuery();
 
 			
 			if(res.next()) {
-				Revue revue = new Revue(res.getInt("id_revue"),res.getString("titre"),res.getString("description"),res.getDouble("tarif_numero"),res.getString("visuel"),res.getInt("id_periodicite")); 
+				Revue revue = new Revue(res.getInt("id_revue"),res.getString("titre"),res.getString("description"),res.getDouble("tarif_numero"),res.getString("visuel"),new Periodicite(res.getInt("id_periodicite"),res.getString("libelle"))); 
 				if (requete != null)requete.close();
 				if (laConnexion != null)laConnexion.close();
 				return revue;
@@ -146,11 +147,11 @@ public class MySQLRevueDAO implements RevueDAO{
 	public Revue getByTitre(Revue revue) {
 		try {
 			Connection laConnexion = Connexion.creeConnexion();
-			PreparedStatement requete = laConnexion.prepareStatement("Select * From Revue Where titre=?");
+			PreparedStatement requete = laConnexion.prepareStatement("Select * From Revue, Periodicite Where titre=? AND Revue.id_periodicite=Periodicite.id_periodicite");
 			requete.setString(1,revue.getTitre());
 			ResultSet res = requete.executeQuery();
 			if(res.next()) {
-				Revue Rrevue = new Revue(res.getInt("id_revue"),res.getString("titre"),res.getString("description"),res.getDouble("tarif_numero"),res.getString("visuel"),res.getInt("id_periodicite")); 
+				Revue Rrevue = new Revue(res.getInt("id_revue"),res.getString("titre"),res.getString("description"),res.getDouble("tarif_numero"),res.getString("visuel"),new Periodicite(res.getInt("id_periodicite"),res.getString("libelle"))); 
 				if (requete != null)requete.close();
 				if (laConnexion != null)laConnexion.close();
 				return Rrevue;
@@ -173,15 +174,15 @@ public class MySQLRevueDAO implements RevueDAO{
 	public ArrayList<Revue> GetByPerio(Revue revue) {
 		try {
 			Connection laConnexion = Connexion.creeConnexion();
-			PreparedStatement requete = laConnexion.prepareStatement("Select * From Revue Where id_periodicite=?");
-			requete.setInt(1,revue.getId_perio());
+			PreparedStatement requete = laConnexion.prepareStatement("Select * From Revue, Periodicite Where Revue.id_periodicite=? AND Revue.id_periodicite=Periodicite.id_periodicite");
+			requete.setInt(1,revue.getperio().getId());
 			ResultSet res = requete.executeQuery();
 			
 
 			ArrayList<Revue> Liste = new ArrayList<Revue>();
 			
 			while (res.next()) {
-				Liste.add(new Revue(res.getInt("id_revue"),res.getString("titre"),res.getString("description"),res.getDouble("tarif_numero"),res.getString("visuel"),res.getInt("id_periodicite")));
+				Liste.add(new Revue(res.getInt("id_revue"),res.getString("titre"),res.getString("description"),res.getDouble("tarif_numero"),res.getString("visuel"),new Periodicite(res.getInt("id_periodicite"),res.getString("libelle"))));
 				}
 			if (requete != null)requete.close();
 			if (laConnexion != null)laConnexion.close();
@@ -199,12 +200,12 @@ public class MySQLRevueDAO implements RevueDAO{
 		try {
 			
 			Connection laConnexion = Connexion.creeConnexion();
-			PreparedStatement requete = laConnexion.prepareStatement("Select * From Revue");
+			PreparedStatement requete = laConnexion.prepareStatement("Select * From Revue, Periodicite WHERE Revue.id_periodicite=Periodicite.id_periodicite");
 			ResultSet res = requete.executeQuery();
 			ArrayList<Revue> array = new ArrayList<Revue>();
 			
 			while (res.next()) {
-				array.add(new Revue(res.getInt("id_revue"),res.getString("titre"),res.getString("description"),res.getDouble("tarif_numero"),res.getString("visuel"),res.getInt("id_periodicite")));
+				array.add(new Revue(res.getInt("id_revue"),res.getString("titre"),res.getString("description"),res.getDouble("tarif_numero"),res.getString("visuel"),new Periodicite(res.getInt("id_periodicite"),res.getString("libelle"))));
 			}				
 			if (requete != null)requete.close();
 			if (laConnexion != null)laConnexion.close();
