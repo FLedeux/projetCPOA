@@ -51,12 +51,14 @@ public class Launch_main extends Application{
 		this.daos = DAOFactory.getDAOFactory(Persistance.MYSQL);
 		this.mi_sql.setDisable(true);
 		this.mi_liste.setDisable(false);
+		this.vbox_container.getChildren().clear();
 	}
 	
 	public void ListeMemoire_click() {
 		this.daos = DAOFactory.getDAOFactory(Persistance.ListeMemoire);
 		this.mi_liste.setDisable(true);
 		this.mi_sql.setDisable(false);
+		this.vbox_container.getChildren().clear();
 	}
 	
 	

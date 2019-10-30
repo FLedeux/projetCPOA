@@ -27,7 +27,7 @@
       </GridPane>
       <FlowPane alignment="CENTER" prefHeight="200.0" prefWidth="200.0">
          <children>
-            <Button fx:id="b_creer" disable="true" mnemonicParsing="false" onAction="#creation" text="Button" />
+            <Button fx:id="b_creer" disable="true" mnemonicParsing="false" onAction="#creation" text="Ajouter" />
          </children>
       </FlowPane>
       <FlowPane alignment="CENTER" prefHeight="200.0" prefWidth="200.0">

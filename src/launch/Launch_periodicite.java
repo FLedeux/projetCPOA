@@ -19,29 +19,11 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import metier.Periodicite;
 
-public class Launch_periodicite extends Application implements Initializable{
+public class Launch_periodicite  implements Initializable{
 
 	@FXML private TextField tf_periodicite;
 	@FXML private Button b_creer;
-	@FXML	private Label lbl_display;
-	private static DAOFactory daos;
-	
-	
-	public static void main(String[] args) {
-		System.out.println("s�l�ctionner le mode de donn�es : 1 pour Liste M�moire, 2 pour SQL");
-		int i=0;
-		Scanner sc = new Scanner(System.in);	
-		do {
-			i=sc.nextInt();
-		} while(i!=1&&i!=2);
-		if(i==1) daos = DAOFactory.getDAOFactory(Persistance.ListeMemoire);
-		else daos = DAOFactory.getDAOFactory(Persistance.MYSQL);
-		launch(args);
-
-	}
-	
-	
-	
+	@FXML private Label lbl_display;
 	
 	
 	
@@ -53,28 +35,29 @@ public class Launch_periodicite extends Application implements Initializable{
 	        	else this.b_creer.setDisable(false);
 	        }
 		);
+		if(Periodiciteframe.getmodification()) {
+			this.tf_periodicite.setText(Periodiciteframe.getselecteditem().getNom());
+			this.b_creer.setText("modifier");
+		}
 	}
 
-	@Override
-	public void start(Stage primaryStage) throws Exception {
-		try {
-			URL fxmlURL=getClass().getResource("../fxml/periodicite.fxml");
-			FXMLLoader fxmlLoader = new FXMLLoader(fxmlURL);
-			Node root = fxmlLoader.load();
-			Scene scene = new Scene((VBox) root, 600, 400);
-			primaryStage.setScene(scene);
-			primaryStage.setTitle("Gestion des periodicites");
-			primaryStage.show();
-			} catch (Exception e) {
-				e.printStackTrace();
-				}
-		
-	}
 	
 	public void creation() {
+		if(Periodiciteframe.getmodification()) {
+			Periodicite p = new Periodicite(Periodiciteframe.getselecteditem().getId(),this.tf_periodicite.getText());
+			Launch_main.getdaos().getPeriodiciteDAO().update(p);
+		}
+		else {
 		Periodicite p = new Periodicite(0,this.tf_periodicite.getText());		
-		daos.getPeriodiciteDAO().create(p);	
+		Launch_main.getdaos().getPeriodiciteDAO().create(p);	
 		lbl_display.setText(p.toString());
+		}
+		Periodiciteframe.gettableview().getItems().clear();//recharge le tableau
+		Periodiciteframe.gettableview().getItems().addAll(Launch_main.getdaos().getPeriodiciteDAO().findAll());
+		if(Periodiciteframe.getmodification()) {
+			Periodiciteframe.getvbox().getChildren().clear();
+		}
+		else this.tf_periodicite.setText("");
 	}
 
 }
