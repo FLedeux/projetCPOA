@@ -14,15 +14,15 @@
       <VBox fx:id="vbox_ajout" prefHeight="200.0" prefWidth="100.0" />
       <FlowPane prefHeight="182.0" prefWidth="600.0">
          <children>
-            <TableView prefHeight="160.0" prefWidth="599.0">
+            <TableView fx:id="tableau" prefHeight="160.0" prefWidth="599.0">
               <columns>
-                <TableColumn prefWidth="60.0" text="Nom" />
-                  <TableColumn prefWidth="68.0" text="Prénom" />
-                  <TableColumn prefWidth="93.0" text="Numéro de rue" />
-                  <TableColumn prefWidth="93.0" text="Nom de la rue" />
-                  <TableColumn prefWidth="72.0" text="Code postal" />
-                  <TableColumn prefWidth="99.0" text="Ville" />
-                  <TableColumn prefWidth="113.0" text="Pays" />
+                  <TableColumn fx:id="colnom" prefWidth="60.0" text="Nom" />
+                  <TableColumn fx:id="colprenom" prefWidth="68.0" text="Prénom" />
+                  <TableColumn fx:id="colnum_rue" prefWidth="93.0" text="Numéro de rue" />
+                  <TableColumn fx:id="colnom_rue" prefWidth="93.0" text="Nom de la rue" />
+                  <TableColumn fx:id="colcode_postal" prefWidth="72.0" text="Code postal" />
+                  <TableColumn fx:id="col_ville" prefWidth="99.0" text="Ville" />
+                  <TableColumn fx:id="col_pays" prefWidth="113.0" text="Pays" />
               </columns>
             </TableView>
          </children>
@@ -38,10 +38,10 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button alignment="CENTER" mnemonicParsing="false" text="ajouter" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="106.0" text="modifier" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="82.0" text="supprimer" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Button mnemonicParsing="false" text="plus d'option" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#open_ajout" text="ajouter" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button fx:id="b_modifier" mnemonicParsing="false" onAction="#open_modifier" prefHeight="26.0" prefWidth="106.0" text="modifier" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button fx:id="b_supprimer" mnemonicParsing="false" onAction="#supprimer" prefHeight="26.0" prefWidth="82.0" text="supprimer" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button fx:id="b_option" mnemonicParsing="false" onAction="#open_option" text="plus d'option" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
          </children>
       </GridPane>
    </children>

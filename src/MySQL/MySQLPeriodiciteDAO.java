@@ -58,14 +58,15 @@ public class MySQLPeriodiciteDAO implements PeriodiciteDAO{
 			
 			PreparedStatement requete = laConnexion.prepareStatement("Select count(*) from Periodicite where libelle = ?");
 			requete.setString(1,periodicite.getNom());
-			int res = requete.executeUpdate();
-			if (res>0) {
+			ResultSet result = requete.executeQuery();
+			result.next();
+			if (result.getInt(1)>0) {
 				throw (new IllegalArgumentException("Cette periodicite existe déjà"));
 			}
 			
 			requete = laConnexion.prepareStatement("insert into Periodicite (libelle) values(?)",Statement.RETURN_GENERATED_KEYS);
 			requete.setString(1,periodicite.getNom());
-			res = requete.executeUpdate();
+			int res = requete.executeUpdate();
 			
 			if (res == 1) {
 				ResultSet key = requete.getGeneratedKeys();
@@ -91,15 +92,16 @@ public class MySQLPeriodiciteDAO implements PeriodiciteDAO{
 			
 			PreparedStatement requete = laConnexion.prepareStatement("Select count(*) from Periodicite where libelle = ?");
 			requete.setString(1,periodicite.getNom());
-			int res = requete.executeUpdate();
-			if (res>0) {
+			ResultSet result = requete.executeQuery();
+			result.next();
+			if (result.getInt(1)>0) {
 				throw (new IllegalArgumentException("Cette periodicite existe déjà"));
 			}
 			
 			requete = laConnexion.prepareStatement("update Periodicite set libelle=? where id_periodicite=?");
 			requete.setString(1, periodicite.getNom());
 			requete.setInt(2, periodicite.getId());
-			res = requete.executeUpdate();
+			int res = requete.executeUpdate();
 			if (requete != null)requete.close();
 			
 			if (laConnexion != null)laConnexion.close();
@@ -122,14 +124,15 @@ public class MySQLPeriodiciteDAO implements PeriodiciteDAO{
 			Connection laConnexion = Connexion.creeConnexion();
 			PreparedStatement requete = laConnexion.prepareStatement("Select count(*) from Revue where id_periodicite = ?");
 			requete.setString(1,periodicite.getNom());
-			int res = requete.executeUpdate();
-			if (res>0) {
+			ResultSet result = requete.executeQuery();
+			result.next();
+			if (result.getInt(1)>0) {
 				throw (new IllegalArgumentException("Cette periodicite existe déjà"));
 			}
 			
 			requete = laConnexion.prepareStatement("delete from Periodicite where id_periodicite=?");
 			requete.setInt(1, periodicite.getId());
-			res = requete.executeUpdate();
+			int res = requete.executeUpdate();
 			
 			if (requete != null)requete.close();
 			

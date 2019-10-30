@@ -33,7 +33,6 @@ public class Periodiciteframe implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		colNom.setCellValueFactory(new PropertyValueFactory<Periodicite, String>("nom"));
-		this.tableau.getColumns().setAll(colNom);
 		this.tableau.getItems().addAll(Launch_main.getdaos().getPeriodiciteDAO().findAll());
 	
 		tableau.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -42,11 +41,6 @@ public class Periodiciteframe implements Initializable{
 		    	b_supprimer.setDisable(false);
 		    	p = this.tableau.getSelectionModel().getSelectedItem();
 		    }
-		    try {
-				load_vbox_ajout();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
 		});
 	}
 	
