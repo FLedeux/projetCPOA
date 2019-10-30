@@ -52,9 +52,9 @@ public class Periodicite {
 		if (getClass() != obj.getClass())
 			return false;
 		Periodicite other = (Periodicite) obj;
-		if (id != other.id)
-			return false;
-		return true;
+		if (id == other.id||nom == other.nom)
+			return true;
+		return false;
 	}
 	
 	

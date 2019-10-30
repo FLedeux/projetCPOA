@@ -7,6 +7,8 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -81,7 +83,16 @@ public class Periodiciteframe implements Initializable{
 	
 	public void supprimer() {
 		Periodicite p = this.tableau.getSelectionModel().getSelectedItem();
-		Launch_main.getdaos().getPeriodiciteDAO().delete(p);
+		try{
+			Launch_main.getdaos().getPeriodiciteDAO().delete(p);
+		}
+		catch(Exception e) {
+	        Alert alert = new Alert(AlertType.INFORMATION);
+	        alert.setTitle("tentative de suppression");
+	        alert.setHeaderText(null);
+	        alert.setContentText(e.getMessage()); 
+	        alert.showAndWait();
+		}
 		this.reload_tableau();
 	}
 	

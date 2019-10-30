@@ -3,7 +3,10 @@ package liste_memoire;
 import java.util.ArrayList;
 
 import dao.PeriodiciteDAO;
+import factory.DAOFactory;
+import factory.Persistance;
 import metier.Periodicite;
+import metier.Revue;
 
 public class ListeMemoirePeriodiciteDAO implements PeriodiciteDAO{
 
@@ -48,6 +51,10 @@ public class ListeMemoirePeriodiciteDAO implements PeriodiciteDAO{
 
 	@Override
 	public boolean create(Periodicite object) {
+		object.setId(0);
+		if(this.donnees.contains(object)) {
+			throw new IllegalArgumentException("Cette prériodicité existe déjà");
+		}
 		
 		object.setId(3);
 		
@@ -63,6 +70,13 @@ public class ListeMemoirePeriodiciteDAO implements PeriodiciteDAO{
 
 	@Override
 	public boolean update(Periodicite object) {
+		int temp = object.getId();
+		object.setId(0);
+		if(this.donnees.contains(object)) {
+			throw new IllegalArgumentException("Cette prériodicité existe déjà");
+		}
+		object.setId(temp);
+		
 		int idx = this.donnees.indexOf(object);
 		if (idx == -1) {
 			throw new IllegalArgumentException("Tentative de modification d'un objet inexistant");
@@ -76,6 +90,12 @@ public class ListeMemoirePeriodiciteDAO implements PeriodiciteDAO{
 
 	@Override
 	public boolean delete(Periodicite object) {
+		
+		ArrayList<Revue> revue= DAOFactory.getDAOFactory(Persistance.ListeMemoire).getRevueDAO().GetByPerio(new Revue(0,"","",0,"",object.getId())); 
+		
+		if(revue.size()!=0) {
+			throw new IllegalArgumentException("Impossible de supprimer une périodicité utiliser par une revue");
+		}
 		
 		Periodicite supprime;
 		
