@@ -6,6 +6,7 @@ import java.util.Collections;
 import dao.RevueDAO;
 import factory.DAOFactory;
 import factory.Persistance;
+import launch.Launch_main;
 import metier.Abonnement;
 import metier.Client;
 import metier.Periodicite;
@@ -36,12 +37,13 @@ public class ListeMemoireRevueDAO implements RevueDAO{
 
 	@Override
 	public Revue getById(int id) {
-		
-		int idx = this.donnees.indexOf(new Revue(id, "","",0,"",new Periodicite(0,"")));
+		ArrayList<Revue> data = findAll();
+
+		int idx = data.indexOf(new Revue(id, "","",0,"",new Periodicite(0,"")));
 		if (idx == -1) {
 			throw new IllegalArgumentException("Aucun objet ne possède cet identifiant");
 		} else {
-			return this.donnees.get(idx);
+			return data.get(idx);
 		}
 	}
 
@@ -108,15 +110,16 @@ public class ListeMemoireRevueDAO implements RevueDAO{
 
 	@Override
 	public Revue getByTitre(Revue revue) {
+		ArrayList<Revue> data = findAll();
 		
 		int i=0;
-		while((i<this.donnees.size())&&(this.donnees.get(i).getTitre()!=revue.getTitre())) {
+		while((i<data.size())&&(data.get(i).getTitre()!=revue.getTitre())) {
 			i++;
 		}
-		if(i>=this.donnees.size()) {
+		if(i>=data.size()) {
 			throw new IllegalArgumentException("Aucun objet ne possède ce nom");
 		}
-		return this.donnees.get(i);
+		return data.get(i);
 		
 	}
 
@@ -125,9 +128,10 @@ public class ListeMemoireRevueDAO implements RevueDAO{
 	public ArrayList<Revue> GetByPerio(Revue revue) {
 		int i=0;
 		ArrayList<Revue> array = new ArrayList<Revue>();
-		while(i<this.donnees.size()) {
-			if (this.donnees.get(i).getPerio().getId()==revue.getPerio().getId()) {
-				array.add(this.donnees.get(i));
+		ArrayList<Revue> data = findAll();
+		while(i<data.size()) {
+			if (data.get(i).getPerio().getId()==revue.getPerio().getId()) {
+				array.add(data.get(i));
 			}
 			i++;
 		}
@@ -137,12 +141,17 @@ public class ListeMemoireRevueDAO implements RevueDAO{
 
 	@Override
 	public ArrayList<Revue> findAll() {
-	return this.donnees;
+		ArrayList<Revue> liste = this.donnees;
+		for(int i=0;i<liste.size();i++) {
+			liste.get(i).setQuantite(Launch_main.getdaos().getAbonnementDAO().GetByIDRevue(new Abonnement(null,liste.get(i),"01/01/2000","01/01/2000")).size());
+		}
+		return this.donnees;
+	
 	}
 
 	@Override
 	public ArrayList<Revue> Classement_periodicite() {
-		ArrayList<Revue> donnees = this.donnees;
+		ArrayList<Revue> donnees = findAll();
 		Collections.sort(donnees);
 		return donnees;
 	}
@@ -151,9 +160,10 @@ public class ListeMemoireRevueDAO implements RevueDAO{
 	public ArrayList<Revue> GetByTarif(Revue revue) {
 		int i=0;
 		ArrayList<Revue> array = new ArrayList<Revue>();
-		while(i<this.donnees.size()) {
-			if (this.donnees.get(i).getTarif_numero()<=revue.getTarif_numero()) {
-				array.add(this.donnees.get(i));
+		ArrayList<Revue> data = findAll();
+		while(i<data.size()) {
+			if (data.get(i).getTarif_numero()<=revue.getTarif_numero()) {
+				array.add(data.get(i));
 			}
 			i++;
 		}
