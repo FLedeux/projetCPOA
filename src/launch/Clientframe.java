@@ -94,10 +94,9 @@ public class Clientframe implements Initializable{
 	
 	
 	public void supprimer() {
-		Client c = this.tableau.getSelectionModel().getSelectedItem();
 		try{
 			Launch_main.getdaos().getClientDAO().delete(c);
-			//TODO eviter la suppression d'un elément qui est utilisé
+			//eviter la suppression d'un elément qui est utilisé
 		}
 		catch(Exception e) {
 	        Alert alert = new Alert(AlertType.INFORMATION);

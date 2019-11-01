@@ -24,7 +24,7 @@ import javafx.stage.Stage;
 import metier.Periodicite;
 import metier.Revue;
 
-public class Launch_revue extends Application implements Initializable {
+public class Launch_revue implements Initializable {
 
 @FXML	private Label lbl_display;
 @FXML	private TextField  tf_titre;
@@ -32,53 +32,29 @@ public class Launch_revue extends Application implements Initializable {
 @FXML	private TextField tf_tarif;
 @FXML	private ComboBox<Periodicite> cbb_perio;
 @FXML 	private Button b_creer;
-		private static DAOFactory daos;
-	
-	
-	
-	@Override 
-	public void start(Stage primaryStage) {
-		try {
-			URL fxmlURL=getClass().getResource("../fxml/revue.fxml");
-			FXMLLoader fxmlLoader = new FXMLLoader(fxmlURL);
-			Node root = fxmlLoader.load();
-			Scene scene = new Scene((VBox) root, 600, 400);
-			primaryStage.setScene(scene);
-			primaryStage.setTitle("Gestion des revues");
-			primaryStage.show();
-			} catch (Exception e) {
-				e.printStackTrace();
-				}
-		}
-	
-	
-	
-	
-	public static void main(String[] args) {
-		System.out.println("s�l�ctionner le mode de donn�es : 1 pour Liste M�moire, 2 pour SQL");
-		int i=0;
-		Scanner sc = new Scanner(System.in);
-		do {
-			i=sc.nextInt();
-		} while(i!=1&&i!=2);
-		if(i==1) daos = DAOFactory.getDAOFactory(Persistance.ListeMemoire);
-		else daos = DAOFactory.getDAOFactory(Persistance.MYSQL);
-		launch(args);
-
-	}
-
+		private Revue r;
 	
 	public void creation() {
+		if(Revueframe.getmodification()) {
+			Revue r = new Revue(this.r.getId(),this.tf_titre.getText(),this.tf_description.getText(),Double.valueOf(this.tf_tarif.getText()),this.tf_titre.getText()+".png",this.cbb_perio.getValue());
+			Launch_main.getdaos().getRevueDAO().update(r);
+			Clientframe.getvbox().getChildren().clear();
+		}
+		else {
 		Revue r = new Revue(0,tf_titre.getText(),tf_description.getText(),Double.valueOf(tf_tarif.getText()),tf_titre.getText()+".png",cbb_perio.getValue());
-		daos.getRevueDAO().create(r);
-		lbl_display.setText(r.toString());
+		Launch_main.getdaos().getRevueDAO().create(r);
+		lbl_display.setText(r.toString());	
+		}
 	}
+	
+	
 	
 	@FXML
 	public void test_numerique(KeyEvent key) {
 		if((!Character.isDigit(key.getCharacter().charAt(0))&&(key.getCharacter().charAt(0)!='.')) || ((key.getCharacter().charAt(0)=='.')&&(tf_tarif.getText().contains("."))))
 				key.consume();	
 	}
+	
 	
 	@FXML	
 	public void test_combobox(ActionEvent e) {
@@ -94,8 +70,8 @@ public class Launch_revue extends Application implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-        this.cbb_perio.setItems( FXCollections.observableArrayList(daos.getPeriodiciteDAO().findAll()));		
-        
+        this.cbb_perio.setItems( FXCollections.observableArrayList(Launch_main.getdaos().getPeriodiciteDAO().findAll()));		
+
         tf_tarif.textProperty().addListener((observable, oldValue, newValue)->{
         	try {//regarde si on peut convertir ce qui est dans tf_tarif en double
         		Double.valueOf(newValue);
@@ -112,11 +88,17 @@ public class Launch_revue extends Application implements Initializable {
         		this.b_creer.setDisable(true);
         	
         	else if((!tf_tarif.getText().isEmpty())&&(cbb_perio.getValue()!=null)) 
-        		this.b_creer.setDisable(false);	
+        		this.b_creer.setDisable(false);
+        	else this.b_creer.setDisable(true);
         });
-        
-        this.b_creer.setDisable(true);
-        
+        //initialization en cas de modification
+        if(Revueframe.getmodification()) {
+        	r=Revueframe.getselecteditem();
+        	this.tf_titre.setText(r.getTitre());
+        	this.tf_description.setText(r.getDescription());
+        	this.cbb_perio.setValue(r.getPerio());
+        	this.tf_tarif.setText(String.valueOf(r.getTarif_numero()));
+        }
 	}
 	
 
