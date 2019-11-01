@@ -106,7 +106,9 @@ public class Abonnement {
 					return false;
 			} else if (!revue.equals(other.revue))
 				return false;
+			if(client.equals(other.client)&&revue.equals(other.revue))
 			return true;
+			else return false;
 		}
 
 

@@ -30,9 +30,9 @@ public class ListeMemoireAbonnementDAO implements AbonnementDAO{
 	
 	@Override
 	public boolean create(Abonnement object) {
-
+		
        if(this.donnees.contains(object)) {
-    	   throw new IllegalArgumentException("un client ne peut pas etre abonné deux fois à la même revue");
+    	   throw new IllegalArgumentException("cet abonnement existe déjà");
        }
 		return this.donnees.add(object);
 		
@@ -40,6 +40,10 @@ public class ListeMemoireAbonnementDAO implements AbonnementDAO{
 
 	@Override
 	public boolean update(Abonnement object) {
+		
+		if(this.donnees.contains(object)) {
+			throw new IllegalArgumentException("Cet abonnement existe déjà");
+		}
 		
 		int idx = this.donnees.indexOf(object);
 		if (idx == -1) {
@@ -126,6 +130,11 @@ public class ListeMemoireAbonnementDAO implements AbonnementDAO{
 			i++;
 		}
 		return array;
+	}
+
+	@Override
+	public ArrayList<Abonnement> findAll() {
+		return this.donnees;
 	}
 	
 	}

@@ -41,6 +41,7 @@ public class Revueframe implements Initializable{
 		colprix.setCellValueFactory(new PropertyValueFactory<Revue, Double>("tarif_numero"));
 		colperio.setCellValueFactory(new PropertyValueFactory<Revue, Periodicite>("perio"));
 		
+		
 		this.tableau.getItems().addAll(Launch_main.getdaos().getRevueDAO().findAll());
 		
 		tableau.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {

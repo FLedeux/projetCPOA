@@ -13,39 +13,31 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import metier.Abonnement;
 import metier.Client;
 import metier.Revue;
 
-public class Launch_abonnement extends Application implements Initializable{
+public class Launch_abonnement implements Initializable{
 
 	@FXML private ComboBox<Client> cbb_client;
 	@FXML private ComboBox<Revue> cbb_revue;
 	@FXML private DatePicker dp_debut;
 	@FXML private DatePicker dp_fin;
 	@FXML private Button b_creer;
-	@FXML	private Label lbl_display;
-	private static DAOFactory daos;
-	
-	
-	public static void main(String[] args) {
-		System.out.println("s�l�ctionner le mode de donn�es : 1 pour Liste M�moire, 2 pour SQL");
-		int i=0;
-		Scanner sc = new Scanner(System.in);	
-		do {
-			i=sc.nextInt();
-		} while(i!=1&&i!=2);
-		if(i==1) daos = DAOFactory.getDAOFactory(Persistance.ListeMemoire);
-		else daos = DAOFactory.getDAOFactory(Persistance.MYSQL);
-		launch(args);
+	@FXML private Label lbl_display;
+		  private Abonnement a;
 
-	}
+	
+	
+	
 	
 	
 	
@@ -55,25 +47,24 @@ public class Launch_abonnement extends Application implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		 
-        this.cbb_client.setItems( FXCollections.observableArrayList(daos.getClientDAO().findAll()));	
-        this.cbb_revue.setItems( FXCollections.observableArrayList(daos.getRevueDAO().findAll()));
+		a = Abonnementframe.getselecteditem();
+		
+        this.cbb_client.setItems( FXCollections.observableArrayList(Launch_main.getdaos().getClientDAO().findAll()));	
+        this.cbb_revue.setItems( FXCollections.observableArrayList(Launch_main.getdaos().getRevueDAO().findAll()));
+        
+        if(Abonnementframe.getmodification()) {
+        	cbb_client.setValue(a.getClient());
+        	cbb_revue.setValue(a.getRevue());
+        	dp_debut.setValue(a.getDate_debut());
+        	dp_fin.setValue(a.getDate_fin());
+        	cbb_client.setDisable(true);
+        	cbb_revue.setDisable(true);
+        	b_creer.setText("modifier");
+        	
+        }
 	}
 
-	@Override
-	public void start(Stage primaryStage) throws Exception {
-		try {
-			URL fxmlURL=getClass().getResource("../fxml/abonnement.fxml");
-			FXMLLoader fxmlLoader = new FXMLLoader(fxmlURL);
-			Node root = fxmlLoader.load();
-			Scene scene = new Scene((VBox) root, 600, 400);
-			primaryStage.setScene(scene);
-			primaryStage.setTitle("Gestion des periodicites");
-			primaryStage.show();
-			} catch (Exception e) {
-				e.printStackTrace();
-				}
-		
-	}
+
 	
 	public void check() {
 		if((this.cbb_client.getValue()!=null)&&(this.cbb_revue.getValue()!=null)&&(this.dp_debut.getValue()!=null)&&(this.dp_fin.getValue()!=null)&&(this.dp_fin.getValue().isAfter(this.dp_debut.getValue())))
@@ -82,9 +73,37 @@ public class Launch_abonnement extends Application implements Initializable{
 	}
 	
 	public void creation() {
-		Abonnement a = new Abonnement(this.cbb_client.getValue(),this.cbb_revue.getValue(),this.dp_debut.getValue(),this.dp_fin.getValue());
-		this.daos.getAbonnementDAO().create(a);
-		lbl_display.setText(a.toString());
+		try {
+			if(Abonnementframe.getmodification()) {
+				Abonnement a = new Abonnement(this.a.getClient(),this.a.getRevue(),dp_debut.getValue(),dp_fin.getValue());
+				Launch_main.getdaos().getAbonnementDAO().update(a);
+			}
+			else {
+				Abonnement a = new Abonnement(cbb_client.getValue(),cbb_revue.getValue(),dp_debut.getValue(),dp_fin.getValue());
+				Launch_main.getdaos().getAbonnementDAO().create(a);
+			}
+			
+		}
+		catch(Exception e){
+	        Alert alert = new Alert(AlertType.INFORMATION);
+	        if(Periodiciteframe.getmodification())
+	        	alert.setTitle("tentative de modification");
+	        else alert.setTitle("tentative d'ajout");
+	        alert.setHeaderText(null);
+	        alert.setContentText(e.getMessage()); 
+	        alert.showAndWait();
+		}
+		Abonnementframe.gettableview().getItems().clear();//recharge le tableau
+		Abonnementframe.gettableview().getItems().addAll(Launch_main.getdaos().getAbonnementDAO().findAll());
+		if(Abonnementframe.getmodification()) {
+			Abonnementframe.getvbox().getChildren().clear();
+		}
+		else {
+			cbb_client.setValue(null);
+			cbb_revue.setValue(null);
+			dp_debut.setValue(null);
+			dp_fin.setValue(null);
+		}
 	}
 
 }

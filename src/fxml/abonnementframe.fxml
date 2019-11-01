@@ -14,12 +14,12 @@
       <VBox fx:id="vbox_ajout" prefHeight="200.0" prefWidth="100.0" />
       <FlowPane prefHeight="182.0" prefWidth="600.0">
          <children>
-            <TableView prefHeight="200.0" prefWidth="600.0">
+            <TableView fx:id="tableau" prefHeight="200.0" prefWidth="600.0">
               <columns>
-                <TableColumn prefWidth="126.4000244140625" text="Client" />
-                <TableColumn prefWidth="96.79998779296875" text="Revue" />
-                  <TableColumn prefWidth="168.0" text="date de début" />
-                  <TableColumn minWidth="0.0" prefWidth="207.20001220703125" text="date de fin" />
+                <TableColumn fx:id="colclient" prefWidth="126.4000244140625" text="Client" />
+                <TableColumn fx:id="colrevue" prefWidth="96.79998779296875" text="Revue" />
+                  <TableColumn fx:id="coldated" prefWidth="168.0" text="date de début" />
+                  <TableColumn fx:id="coldatef" minWidth="0.0" prefWidth="207.20001220703125" text="date de fin" />
               </columns>
             </TableView>
          </children>
@@ -35,10 +35,10 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button alignment="CENTER" mnemonicParsing="false" prefWidth="100.0" text="ajouter" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="modifier" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="supprimer" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Button mnemonicParsing="false" prefWidth="100.0" text="filtre" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button alignment="CENTER" mnemonicParsing="false" prefWidth="100.0" onAction="#open_ajout" text="ajouter" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button fx:id="b_modifier" disable="true" mnemonicParsing="false" onAction="#open_modif" prefHeight="26.0" prefWidth="100.0" text="modifier" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button fx:id="b_supprimer" disable="true" mnemonicParsing="false" onAction="#supprimer" prefHeight="26.0" prefWidth="100.0" text="supprimer" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button mnemonicParsing="false" prefWidth="100.0" text="plus d'option" onAction="#open_option" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
          </children>
       </GridPane>
    </children>
