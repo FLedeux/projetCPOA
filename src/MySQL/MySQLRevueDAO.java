@@ -154,13 +154,27 @@ public class MySQLRevueDAO implements RevueDAO{
 	public Revue getById(int id) {
 		try {
 			Connection laConnexion = Connexion.creeConnexion();
-			PreparedStatement requete = laConnexion.prepareStatement("Select * From Revue, Periodicite Where id_revue=? AND Revue.id_periodicite=Periodicite.id_periodicite");
+			PreparedStatement requete = laConnexion.prepareStatement("DROP TABLE IF EXISTS T1;\n" + 
+					"DROP TABLE IF EXISTS T2;\n" + 
+					"\n" + 
+					"CREATE TEMPORARY TABLE T1\n" + 
+					"SELECT count(*) AS qte, id_revue FROM abonnement GROUP BY id_revue;\n" + 
+					"\n" + 
+					"CREATE TEMPORARY TABLE T2\n" + 
+					"SELECT revue.*, periodicite.libelle FROM revue, periodicite WHERE revue.id_periodicite = periodicite.id_periodicite;\n" + 
+					"\n" + 
+					"SELECT T1.qte, T2.* FROM T1,T2 WHERE T1.id_revue=T2.id_revue AND T2.id_revue = ?\n" + 
+					"\n" + 
+					"UNION\n" + 
+					"\n" + 
+					"SELECT 0 AS qte,revue.*, periodicite.libelle FROM revue, periodicite, abonnement WHERE revue.id_periodicite = periodicite.id_periodicite AND revue.id_revue NOT IN (abonnement.id_revue) AND revue.id_revue = ?;");
 			requete.setInt(1,id);
+			requete.setInt(2, id);
 			ResultSet res = requete.executeQuery();
 
 			
 			if(res.next()) {
-				Revue revue = new Revue(res.getInt("id_revue"),res.getString("titre"),res.getString("description"),res.getDouble("tarif_numero"),res.getString("visuel"),new Periodicite(res.getInt("id_periodicite"),res.getString("libelle"))); 
+				Revue revue = new Revue(res.getInt("id_revue"),res.getString("titre"),res.getString("description"),res.getDouble("tarif_numero"),res.getString("visuel"),new Periodicite(res.getInt("id_periodicite"),res.getString("libelle")),res.getInt("qte")); 
 				if (requete != null)requete.close();
 				if (laConnexion != null)laConnexion.close();
 				return revue;
@@ -182,11 +196,25 @@ public class MySQLRevueDAO implements RevueDAO{
 	public Revue getByTitre(Revue revue) {
 		try {
 			Connection laConnexion = Connexion.creeConnexion();
-			PreparedStatement requete = laConnexion.prepareStatement("Select * From Revue, Periodicite Where titre=? AND Revue.id_periodicite=Periodicite.id_periodicite");
+			PreparedStatement requete = laConnexion.prepareStatement("DROP TABLE IF EXISTS T1;\n" + 
+					"DROP TABLE IF EXISTS T2;\n" + 
+					"\n" + 
+					"CREATE TEMPORARY TABLE T1\n" + 
+					"SELECT count(*) AS qte, id_revue FROM abonnement GROUP BY id_revue;\n" + 
+					"\n" + 
+					"CREATE TEMPORARY TABLE T2\n" + 
+					"SELECT revue.*, periodicite.libelle FROM revue, periodicite WHERE revue.id_periodicite = periodicite.id_periodicite;\n" + 
+					"\n" + 
+					"SELECT T1.qte, T2.* FROM T1,T2 WHERE T1.id_revue=T2.id_revue AND revue.titre = ?\n" + 
+					"\n" + 
+					"UNION\n" + 
+					"\n" + 
+					"SELECT 0 AS qte,revue.*, periodicite.libelle FROM revue, periodicite, abonnement WHERE revue.id_periodicite = periodicite.id_periodicite AND revue.id_revue NOT IN (abonnement.id_revue) AND revue.titre = ?;");
 			requete.setString(1,revue.getTitre());
+			requete.setString(2, revue.getTitre());
 			ResultSet res = requete.executeQuery();
 			if(res.next()) {
-				Revue Rrevue = new Revue(res.getInt("id_revue"),res.getString("titre"),res.getString("description"),res.getDouble("tarif_numero"),res.getString("visuel"),new Periodicite(res.getInt("id_periodicite"),res.getString("libelle"))); 
+				Revue Rrevue = new Revue(res.getInt("id_revue"),res.getString("titre"),res.getString("description"),res.getDouble("tarif_numero"),res.getString("visuel"),new Periodicite(res.getInt("id_periodicite"),res.getString("libelle")),res.getInt("qte")); 
 				if (requete != null)requete.close();
 				if (laConnexion != null)laConnexion.close();
 				return Rrevue;
@@ -209,15 +237,29 @@ public class MySQLRevueDAO implements RevueDAO{
 	public ArrayList<Revue> GetByPerio(Revue revue) {
 		try {
 			Connection laConnexion = Connexion.creeConnexion();
-			PreparedStatement requete = laConnexion.prepareStatement("Select * From Revue, Periodicite Where Revue.id_periodicite=? AND Revue.id_periodicite=Periodicite.id_periodicite");
+			PreparedStatement requete = laConnexion.prepareStatement("DROP TABLE IF EXISTS T1;\n" + 
+					"DROP TABLE IF EXISTS T2;\n" + 
+					"\n" + 
+					"CREATE TEMPORARY TABLE T1\n" + 
+					"SELECT count(*) AS qte, id_revue FROM abonnement GROUP BY id_revue;\n" + 
+					"\n" + 
+					"CREATE TEMPORARY TABLE T2\n" + 
+					"SELECT revue.*, periodicite.libelle FROM revue, periodicite WHERE revue.id_periodicite = periodicite.id_periodicite;\n" + 
+					"\n" + 
+					"SELECT T1.qte, T2.* FROM T1,T2 WHERE T1.id_revue=T2.id_revue\n AND T2.id_periodicite = ?" + 
+					"\n" + 
+					"UNION\n" + 
+					"\n" + 
+					"SELECT 0 AS qte,revue.*, periodicite.libelle FROM revue, periodicite, abonnement WHERE revue.id_periodicite = periodicite.id_periodicite AND revue.id_revue NOT IN (abonnement.id_revue) AND Revue.id_periodicite = ?;");
 			requete.setInt(1,revue.getPerio().getId());
+			requete.setInt(2, revue.getPerio().getId());
 			ResultSet res = requete.executeQuery();
 			
 
 			ArrayList<Revue> Liste = new ArrayList<Revue>();
 			
 			while (res.next()) {
-				Liste.add(new Revue(res.getInt("id_revue"),res.getString("titre"),res.getString("description"),res.getDouble("tarif_numero"),res.getString("visuel"),new Periodicite(res.getInt("id_periodicite"),res.getString("libelle"))));
+				Liste.add(new Revue(res.getInt("id_revue"),res.getString("titre"),res.getString("description"),res.getDouble("tarif_numero"),res.getString("visuel"),new Periodicite(res.getInt("id_periodicite"),res.getString("libelle")),res.getInt("qte")));
 				}
 			if (requete != null)requete.close();
 			if (laConnexion != null)laConnexion.close();
@@ -235,12 +277,25 @@ public class MySQLRevueDAO implements RevueDAO{
 		try {
 			
 			Connection laConnexion = Connexion.creeConnexion();
-			PreparedStatement requete = laConnexion.prepareStatement("Select * From Revue, Periodicite WHERE Revue.id_periodicite=Periodicite.id_periodicite");
+			PreparedStatement requete = laConnexion.prepareStatement("DROP TABLE IF EXISTS T1;\n" + 
+					"DROP TABLE IF EXISTS T2;\n" + 
+					"\n" + 
+					"CREATE TEMPORARY TABLE T1\n" + 
+					"SELECT count(*) AS qte, id_revue FROM abonnement GROUP BY id_revue;\n" + 
+					"\n" + 
+					"CREATE TEMPORARY TABLE T2\n" + 
+					"SELECT revue.*, periodicite.libelle FROM revue, periodicite WHERE revue.id_periodicite = periodicite.id_periodicite;\n" + 
+					"\n" + 
+					"SELECT T1.qte, T2.* FROM T1,T2 WHERE T1.id_revue=T2.id_revue\n" + 
+					"\n" + 
+					"UNION\n" + 
+					"\n" + 
+					"SELECT 0 AS qte,revue.*, periodicite.libelle FROM revue, periodicite, abonnement WHERE revue.id_periodicite = periodicite.id_periodicite AND revue.id_revue NOT IN (abonnement.id_revue);");
 			ResultSet res = requete.executeQuery();
 			ArrayList<Revue> array = new ArrayList<Revue>();
 			
 			while (res.next()) {
-				array.add(new Revue(res.getInt("id_revue"),res.getString("titre"),res.getString("description"),res.getDouble("tarif_numero"),res.getString("visuel"),new Periodicite(res.getInt("id_periodicite"),res.getString("libelle"))));
+				array.add(new Revue(res.getInt("id_revue"),res.getString("titre"),res.getString("description"),res.getDouble("tarif_numero"),res.getString("visuel"),new Periodicite(res.getInt("id_periodicite"),res.getString("libelle")),res.getInt("qte")));
 			}				
 			if (requete != null)requete.close();
 			if (laConnexion != null)laConnexion.close();
@@ -257,12 +312,29 @@ public class MySQLRevueDAO implements RevueDAO{
 		try {
 			
 			Connection laConnexion = Connexion.creeConnexion();
-			PreparedStatement requete = laConnexion.prepareStatement("Select * From Revue, Periodicite WHERE Revue.id_periodicite=Periodicite.id_periodicite ORDER BY Revue.id_periodicite");
+			PreparedStatement requete = laConnexion.prepareStatement("DROP TABLE IF EXISTS T1;\n" + 
+					"DROP TABLE IF EXISTS T2;\n" + 
+					"DROP TABLE IF EXISTS T3;\n" + 
+					"\n" + 
+					"CREATE TEMPORARY TABLE T1\n" + 
+					"SELECT count(*) AS qte, id_revue FROM abonnement GROUP BY id_revue;\n" + 
+					"\n" + 
+					"CREATE TEMPORARY TABLE T2\n" + 
+					"SELECT revue.*, periodicite.libelle FROM revue, periodicite WHERE revue.id_periodicite = periodicite.id_periodicite;\n" + 
+					"\n" + 
+					"CREATE TEMPORARY TABLE T3\n" + 
+					"SELECT T1.qte, T2.* FROM T1,T2 WHERE T1.id_revue=T2.id_revue\n" + 
+					"\n" + 
+					"UNION\n" + 
+					"\n" + 
+					"SELECT 0 AS qte,revue.*, periodicite.libelle FROM revue, periodicite, abonnement WHERE revue.id_periodicite = periodicite.id_periodicite AND revue.id_revue NOT IN (abonnement.id_revue);\n" + 
+					"\n" + 
+					"SELECT * FROM T3 ORDER BY id_periodicite");
 			ResultSet res = requete.executeQuery();
 			ArrayList<Revue> array = new ArrayList<Revue>();
 			
 			while (res.next()) {
-				array.add(new Revue(res.getInt("id_revue"),res.getString("titre"),res.getString("description"),res.getDouble("tarif_numero"),res.getString("visuel"),new Periodicite(res.getInt("id_periodicite"),res.getString("libelle"))));
+				array.add(new Revue(res.getInt("id_revue"),res.getString("titre"),res.getString("description"),res.getDouble("tarif_numero"),res.getString("visuel"),new Periodicite(res.getInt("id_periodicite"),res.getString("libelle")),res.getInt("qte")));
 			}				
 			if (requete != null)requete.close();
 			if (laConnexion != null)laConnexion.close();
@@ -279,7 +351,24 @@ public class MySQLRevueDAO implements RevueDAO{
 		try {
 			
 			Connection laConnexion = Connexion.creeConnexion();
-			PreparedStatement requete = laConnexion.prepareStatement("Select * From Revue, Periodicite WHERE Revue.id_periodicite=Periodicite.id_periodicite AND tarif_numero <= ?");
+			PreparedStatement requete = laConnexion.prepareStatement("DROP TABLE IF EXISTS T1;\n" + 
+					"DROP TABLE IF EXISTS T2;\n" + 
+					"DROP TABLE IF EXISTS T3;\n" + 
+					"\n" + 
+					"CREATE TEMPORARY TABLE T1\n" + 
+					"SELECT count(*) AS qte, id_revue FROM abonnement GROUP BY id_revue;\n" + 
+					"\n" + 
+					"CREATE TEMPORARY TABLE T2\n" + 
+					"SELECT revue.*, periodicite.libelle FROM revue, periodicite WHERE revue.id_periodicite = periodicite.id_periodicite;\n" + 
+					"\n" + 
+					"CREATE TEMPORARY TABLE T3\n" + 
+					"SELECT T1.qte, T2.* FROM T1,T2 WHERE T1.id_revue=T2.id_revue\n" + 
+					"\n" + 
+					"UNION\n" + 
+					"\n" + 
+					"SELECT 0 AS qte,revue.*, periodicite.libelle FROM revue, periodicite, abonnement WHERE revue.id_periodicite = periodicite.id_periodicite AND revue.id_revue NOT IN (abonnement.id_revue);\n" + 
+					"\n" + 
+					"SELECT * FROM T3 where tarif_numero<= ?");
 			requete.setDouble(1,revue.getTarif_numero());
 			ResultSet res = requete.executeQuery();
 			ArrayList<Revue> array = new ArrayList<Revue>();
