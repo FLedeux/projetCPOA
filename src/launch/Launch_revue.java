@@ -14,10 +14,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -35,15 +37,36 @@ public class Launch_revue implements Initializable {
 		private Revue r;
 	
 	public void creation() {
+		try {
+			if(Revueframe.getmodification()) {
+				Revue r = new Revue(this.r.getId(),this.tf_titre.getText(),this.tf_description.getText(),Double.valueOf(this.tf_tarif.getText()),this.tf_titre.getText()+".png",this.cbb_perio.getValue());
+				Launch_main.getdaos().getRevueDAO().update(r);
+			}
+			else {
+				Revue r = new Revue(0,tf_titre.getText(),tf_description.getText(),Double.valueOf(tf_tarif.getText()),tf_titre.getText()+".png",cbb_perio.getValue());
+				Launch_main.getdaos().getRevueDAO().create(r);
+				lbl_display.setText(r.toString());	
+		}
+		}
+		catch(Exception e) {
+	        Alert alert = new Alert(AlertType.INFORMATION);
+	        if(Periodiciteframe.getmodification())
+	        	alert.setTitle("tentative de modification");
+	        else alert.setTitle("tentative d'ajout");
+	        alert.setHeaderText(null);
+	        alert.setContentText(e.getMessage()); 
+	        alert.showAndWait();
+		}
+		Revueframe.gettableview().getItems().clear();//recharge le tableau
+		Revueframe.gettableview().getItems().addAll(Launch_main.getdaos().getRevueDAO().findAll());
 		if(Revueframe.getmodification()) {
-			Revue r = new Revue(this.r.getId(),this.tf_titre.getText(),this.tf_description.getText(),Double.valueOf(this.tf_tarif.getText()),this.tf_titre.getText()+".png",this.cbb_perio.getValue());
-			Launch_main.getdaos().getRevueDAO().update(r);
-			Clientframe.getvbox().getChildren().clear();
+			Revueframe.getvbox().getChildren().clear();
 		}
 		else {
-		Revue r = new Revue(0,tf_titre.getText(),tf_description.getText(),Double.valueOf(tf_tarif.getText()),tf_titre.getText()+".png",cbb_perio.getValue());
-		Launch_main.getdaos().getRevueDAO().create(r);
-		lbl_display.setText(r.toString());	
+			this.tf_titre.setText("");
+			this.tf_description.setText("");
+			this.tf_tarif.setText("");
+			this.cbb_perio.setValue(null);
 		}
 	}
 	
@@ -91,6 +114,15 @@ public class Launch_revue implements Initializable {
         		this.b_creer.setDisable(false);
         	else this.b_creer.setDisable(true);
         });
+        
+        
+        tf_titre.textProperty().addListener((observable, oldValue, newValue)->{
+        	if (newValue.length()>400) {
+        		tf_titre.setText( newValue.subSequence(0, 399).toString());
+        	}
+        	
+        });
+        
         //initialization en cas de modification
         if(Revueframe.getmodification()) {
         	r=Revueframe.getselecteditem();
@@ -98,6 +130,7 @@ public class Launch_revue implements Initializable {
         	this.tf_description.setText(r.getDescription());
         	this.cbb_perio.setValue(r.getPerio());
         	this.tf_tarif.setText(String.valueOf(r.getTarif_numero()));
+        	this.b_creer.setText("modifier");
         }
 	}
 	

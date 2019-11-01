@@ -71,7 +71,7 @@ public class ListeMemoireAbonnementDAO implements AbonnementDAO{
 		int i=0;
 		ArrayList<Abonnement> array = new ArrayList<Abonnement>();
 		while(i<this.donnees.size()) {
-			if (this.donnees.get(i).getId_client()==abonnement.getId_client()) {
+			if (this.donnees.get(i).getClient().equals(abonnement.getClient())) {
 				array.add(this.donnees.get(i));
 			}
 			i++;
@@ -84,7 +84,7 @@ public class ListeMemoireAbonnementDAO implements AbonnementDAO{
 		int i=0;
 		ArrayList<Abonnement> array = new ArrayList<Abonnement>();
 		while(i<this.donnees.size()) {
-			if (this.donnees.get(i).getId_revue()==abonnement.getId_revue()) {
+			if (this.donnees.get(i).getRevue().equals(abonnement.getRevue())) {
 				array.add(this.donnees.get(i));
 			}
 			i++;

@@ -29,7 +29,7 @@ class ListeMemoireRevueDAOTest {
 	@Test
 	void testGetById()
 	{
-		test = new Revue(0,"test","ceci est un test",3,"test.jpg",new Periodicite(0,"test"));
+		test = new Revue(0,"testa","ceci est un test",3,"test.jpg",new Periodicite(0,"test"));
 		this.daos.getRevueDAO().create(test);
 		assertEquals(this.daos.getRevueDAO().getById(test.getId()),test);
 	}
@@ -45,7 +45,7 @@ class ListeMemoireRevueDAOTest {
 	@Test
 	void test_update()
 	{
-		test = new Revue(0,"test","ceci est un test",3,"test.jpg",new Periodicite(0,"test"));
+		test = new Revue(0,"test","cecui est un test",3,"test.jpg",new Periodicite(0,"test"));
 		this.daos.getRevueDAO().create(test);
 		Revue test2 = new Revue(test.getId(),"tt","rr",3,"tt.jpg",new Periodicite(0,"test"));
 		assertTrue(this.daos.getRevueDAO().update(test2));
@@ -54,7 +54,7 @@ class ListeMemoireRevueDAOTest {
 	@Test
 	void test_delete()
 	{
-		test = new Revue(0,"test","ceci est un test",3,"test.jpg",new Periodicite(0,"test"));
+		test = new Revue(0,"teste","ceci est un test",3,"test.jpg",new Periodicite(0,"test"));
 		this.daos.getRevueDAO().create(test);
 		assertTrue(this.daos.getRevueDAO().delete(test));
 	}

@@ -36,7 +36,7 @@ public class Launch_main extends Application{
 			URL fxmlURL=getClass().getResource("../fxml/mainframe.fxml");
 			FXMLLoader fxmlLoader = new FXMLLoader(fxmlURL);
 			Node root = fxmlLoader.load();
-			Scene scene = new Scene((VBox) root, 600, 400);
+			Scene scene = new Scene((VBox) root, 600, 800);
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Gestion des periodicites");
 			primaryStage.show();

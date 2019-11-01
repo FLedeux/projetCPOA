@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="launch.Clientframe">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="launch.Clientframe">
    <children>
-      <VBox fx:id="vbox_ajout" prefHeight="200.0" prefWidth="100.0" />
+      <VBox fx:id="vbox_ajout" prefHeight="500.0" prefWidth="600.0" />
       <FlowPane prefHeight="182.0" prefWidth="600.0">
          <children>
             <TableView fx:id="tableau" prefHeight="160.0" prefWidth="599.0">

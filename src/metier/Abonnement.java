@@ -9,14 +9,14 @@ import factory.DAOFactory;
 
 public class Abonnement {
 
-		private int id_client;
-		private int id_revue;
+		private Client client;
+		private Revue revue;
 		private LocalDate date_debut;
 		private LocalDate date_fin;
 	
-		public Abonnement(int id_client,int id_revue,String date_debut,String date_fin){
-			this.setId_client(id_client);
-			this.setId_revue(id_revue);
+		public Abonnement(Client client, Revue revue,String date_debut,String date_fin){
+			this.setClient(client);
+			this.setRevue(revue);
 			
 			DateTimeFormatter formatage = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 				
@@ -25,42 +25,28 @@ public class Abonnement {
 			this.setDate_fin(LocalDate.parse(date_fin, formatage));
 		}
 		
-		public Abonnement(int id_client,int id_revue,LocalDate date_debut,LocalDate date_fin){
-			this.setId_client(id_client);
-			this.setId_revue(id_revue);
+		public Abonnement(Client client,Revue revue,LocalDate date_debut,LocalDate date_fin){
+			this.setClient(client);
+			this.setRevue(revue);
 			this.setDate_debut(date_debut);
 			this.setDate_fin(date_fin);
 		}
 
-
-
-		public int getId_client() {
-			return id_client;
+		public Client getClient() {
+			return client;
 		}
 
-
-
-		public void setId_client(int id_client) {
-			this.id_client = id_client;
+		public void setClient(Client client) {
+			this.client = client;
 		}
 
-
-
-		public int getId_revue() {
-			return id_revue;
+		public Revue getRevue() {
+			return revue;
 		}
 
-
-
-		public void setId_revue(int id_revue) {
-			this.id_revue = id_revue;
+		public void setRevue(Revue revue) {
+			this.revue = revue;
 		}
-
-
-
-
-
-
 
 		public LocalDate getDate_debut() {
 			return date_debut;
@@ -88,7 +74,7 @@ public class Abonnement {
 
 		@Override
 		public String toString() {
-			return "Abonnement [id_client=" + id_client + ", id_revue=" + id_revue + ", date_debut=" + date_debut
+			return "Abonnement [id_client=" + client + ", id_revue=" + revue + ", date_debut=" + date_debut
 					+ ", date_fin=" + date_fin + "]";
 		}
 
@@ -96,8 +82,8 @@ public class Abonnement {
 		public int hashCode() {
 			final int prime = 31;
 			int result = 1;
-			result = prime * result + id_client;
-			result = prime * result + id_revue;
+			result = prime * result + ((client == null) ? 0 : client.hashCode());
+			result = prime * result + ((revue == null) ? 0 : revue.hashCode());
 			return result;
 		}
 
@@ -110,11 +96,19 @@ public class Abonnement {
 			if (getClass() != obj.getClass())
 				return false;
 			Abonnement other = (Abonnement) obj;
-			if (id_client != other.id_client)
+			if (client == null) {
+				if (other.client != null)
+					return false;
+			} else if (!client.equals(other.client))
 				return false;
-			if (id_revue != other.id_revue)
+			if (revue == null) {
+				if (other.revue != null)
+					return false;
+			} else if (!revue.equals(other.revue))
 				return false;
 			return true;
 		}
+
+
 		
 }

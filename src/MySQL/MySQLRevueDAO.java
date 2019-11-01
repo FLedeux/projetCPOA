@@ -30,7 +30,20 @@ public class MySQLRevueDAO implements RevueDAO{
 	public boolean create(Revue revue) {
 		try {
 			Connection laConnexion = Connexion.creeConnexion();
-			PreparedStatement requete = laConnexion.prepareStatement("insert into Revue (titre, description, tarif_numero, visuel, id_periodicite) values(?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
+			
+			PreparedStatement requete = laConnexion.prepareStatement("Select count(*) from Revue where titre = ? AND description = ? AND tarif_numero = ? AND id_periodicite = ?");
+			requete.setString(1,revue.getTitre());
+			requete.setString(2,revue.getDescription());
+			requete.setDouble(3,revue.getTarif_numero());
+			requete.setInt(4,revue.getPerio().getId());
+
+			ResultSet result = requete.executeQuery();
+			result.next();
+			if (result.getInt(1)>0) {
+				throw (new IllegalArgumentException("Cette revue existe déjà"));
+			}
+			
+			requete = laConnexion.prepareStatement("insert into Revue (titre, description, tarif_numero, visuel, id_periodicite) values(?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
 			requete.setString(1, revue.getTitre());
 			requete.setString(2, revue.getDescription());
 			requete.setDouble(3, revue.getTarif_numero());
@@ -61,7 +74,20 @@ public class MySQLRevueDAO implements RevueDAO{
 	public boolean update(Revue revue) {
 		try {
 			Connection laConnexion = Connexion.creeConnexion();
-			PreparedStatement requete = laConnexion.prepareStatement("update Revue set titre=?, description=?,tarif_numero=?,visuel=?,id_periodicite=?  where id_revue=?");
+			
+			PreparedStatement requete = laConnexion.prepareStatement("Select count(*) from Revue where titre = ? AND description = ? AND tarif_numero = ? AND id_periodicite = ?");
+			requete.setString(1,revue.getTitre());
+			requete.setString(2,revue.getDescription());
+			requete.setDouble(3,revue.getTarif_numero());
+			requete.setInt(4,revue.getPerio().getId());
+			
+			ResultSet result = requete.executeQuery();
+			result.next();
+			if (result.getInt(1)>0) {
+				throw (new IllegalArgumentException("Cette revue existe déjà"));
+			}
+			
+			requete = laConnexion.prepareStatement("update Revue set titre=?, description=?,tarif_numero=?,visuel=?,id_periodicite=?  where id_revue=?");
 			requete.setString(1, revue.getTitre());
 			requete.setString(2, revue.getDescription());
 			requete.setDouble(3, revue.getTarif_numero());
@@ -91,7 +117,16 @@ public class MySQLRevueDAO implements RevueDAO{
 	public boolean delete(Revue revue) {
 		try {
 			Connection laConnexion = Connexion.creeConnexion();
-			PreparedStatement requete = laConnexion.prepareStatement("delete from Revue where id_revue=?");
+			
+			PreparedStatement requete = laConnexion.prepareStatement("Select count(*) from Abonnement where id_revue = ?");
+			requete.setInt(1,revue.getId());
+			ResultSet result = requete.executeQuery();
+			result.next();
+			if (result.getInt(1)>0) {
+				throw (new IllegalArgumentException("Impossible de supprimer une revue utilisé autre part"));
+			}
+			
+			requete = laConnexion.prepareStatement("delete from Revue where id_revue=?");
 			requete.setInt(1, revue.getId());
 			int res = requete.executeUpdate();
 			

@@ -103,9 +103,9 @@ public class Revue {
 		if (getClass() != obj.getClass())
 			return false;
 		Revue other = (Revue) obj;
-		if (id != other.id)
-			return false;
-		return true;
+		if ((id == other.id)||((titre==other.titre)&&(description==other.description)&&(tarif_numero==other.tarif_numero)&&(perio.equals(other.perio))))
+			return true;
+		return false;
 	}
 
 	@Override

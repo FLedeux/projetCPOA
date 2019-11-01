@@ -3,6 +3,9 @@ package liste_memoire;
 import java.util.ArrayList;
 
 import dao.RevueDAO;
+import factory.DAOFactory;
+import factory.Persistance;
+import metier.Abonnement;
 import metier.Periodicite;
 import metier.Revue;
 
@@ -42,8 +45,13 @@ public class ListeMemoireRevueDAO implements RevueDAO{
 
 	@Override
 	public boolean create(Revue object) {
-		object.setId(1);
+		object.setId(0);
+		if(this.donnees.contains(object)) {
+			throw new IllegalArgumentException("Cette revue existe déjà");
+		}
 		
+		object.setId(1);
+
 		while (this.donnees.contains(object)) {
 
 			object.setId(object.getId() + 1);
@@ -55,6 +63,14 @@ public class ListeMemoireRevueDAO implements RevueDAO{
 
 	@Override
 	public boolean update(Revue object) {
+		
+		int temp = object.getId();
+		object.setId(0);
+		if(this.donnees.contains(object)) {
+			throw new IllegalArgumentException("Cette revue existe déjà");
+		}
+		object.setId(temp);
+		
 		int idx = this.donnees.indexOf(object);
 		if (idx == -1) {
 			throw new IllegalArgumentException("Tentative de modification d'un objet inexistant");
@@ -68,6 +84,14 @@ public class ListeMemoireRevueDAO implements RevueDAO{
 
 	@Override
 	public boolean delete(Revue object) {
+		
+		ArrayList<Abonnement> abonnement= DAOFactory.getDAOFactory(Persistance.ListeMemoire).getAbonnementDAO().GetByIDRevue(new Abonnement(null,object,"01/01/2000","01/01/2000")); 
+		
+		if(abonnement.size()!=0) {
+			throw new IllegalArgumentException("Impossible de supprimer une périodicité utiliser par une revue");
+		}
+		
+		
 		Revue supprime;
 		
 		int idx = this.donnees.indexOf(object);

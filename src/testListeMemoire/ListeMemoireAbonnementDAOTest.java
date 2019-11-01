@@ -19,23 +19,23 @@ class ListeMemoireAbonnementDAOTest {
 	@Test
 	void test_create()
 	{
-		test = new Abonnement(1,1,"02/03/2000","02/05/2000");
+		test = new Abonnement(daos.getClientDAO().getById(1),daos.getRevueDAO().getById(1),"02/03/2000","02/09/2000");
 		assertTrue(this.daos.getAbonnementDAO().create(test));
 	}
 	
 	@Test
 	void test_update()
 	{
-		test = new Abonnement(1,2,"02/03/2000","02/05/2000");
+		test = new Abonnement(daos.getClientDAO().getById(1),daos.getRevueDAO().getById(1),"02/03/2000","02/04/2000");
 		this.daos.getAbonnementDAO().create(test);
-		Abonnement test2 = new Abonnement(test.getId_client(),test.getId_revue(),"01/05/2003","05/09/2009");
+		Abonnement test2 = new Abonnement(test.getClient(),test.getRevue(),"01/05/2003","05/09/2009");
 		assertTrue(this.daos.getAbonnementDAO().update(test2));
 	}
 	
 	@Test
 	void test_delete()
 	{
-		test = new Abonnement(1,3,"02/03/2000","02/05/2000");
+		test = new Abonnement(daos.getClientDAO().getById(1),daos.getRevueDAO().getById(1),"02/03/2000","02/06/2000");
 		this.daos.getAbonnementDAO().create(test);
 		assertTrue(this.daos.getAbonnementDAO().delete(test));
 	}
@@ -43,7 +43,7 @@ class ListeMemoireAbonnementDAOTest {
 	@Test
 	void test_GetByIdClientRevue()
 	{
-		test = new Abonnement(2,1,"02/03/2000","02/05/2000");
+		test = new Abonnement(daos.getClientDAO().getById(1),daos.getRevueDAO().getById(1),"02/03/2000","02/05/2001");
 		this.daos.getAbonnementDAO().create(test);
 		assertEquals(this.daos.getAbonnementDAO().GetByClientEtRevue(test),test);
 	}
@@ -52,7 +52,7 @@ class ListeMemoireAbonnementDAOTest {
 	void test_GetByClient()
 	{
 		ArrayList<Abonnement> array= new ArrayList<Abonnement>();
-		test = new Abonnement(10,1,"02/03/2000","02/05/2000");
+		test = new Abonnement(daos.getClientDAO().getById(2),daos.getRevueDAO().getById(1),"02/03/2000","02/05/2005");
 		array.add(test);
 		this.daos.getAbonnementDAO().create(test);
 		assertEquals(daos.getAbonnementDAO().GetByIDClient(array.get(0)),array);
@@ -62,7 +62,7 @@ class ListeMemoireAbonnementDAOTest {
 	void test_GetByRevue()
 	{
 		ArrayList<Abonnement> array= new ArrayList<Abonnement>();
-		test = new Abonnement(3,10,"02/03/2000","02/05/2000");
+		test = new Abonnement(daos.getClientDAO().getById(1),daos.getRevueDAO().getById(2),"02/03/2000","02/05/2050");
 		array.add(test);
 		this.daos.getAbonnementDAO().create(test);
 		assertEquals(daos.getAbonnementDAO().GetByIDRevue(array.get(0)),array);
@@ -71,7 +71,7 @@ class ListeMemoireAbonnementDAOTest {
 	void test_GetBydate_debut()
 	{
 		ArrayList<Abonnement> array= new ArrayList<Abonnement>();
-		test = new Abonnement(4,1,"01/01/2019","02/01/2019");
+		test = new Abonnement(daos.getClientDAO().getById(1),daos.getRevueDAO().getById(1),"01/01/2019","02/01/2019");
 		array.add(test);
 		this.daos.getAbonnementDAO().create(test);
 		assertEquals(daos.getAbonnementDAO().GetByDateDebut(array.get(0)),array);
@@ -80,7 +80,7 @@ class ListeMemoireAbonnementDAOTest {
 	void test_GetBydate_fin()
 	{
 		ArrayList<Abonnement> array= new ArrayList<Abonnement>();
-		test = new Abonnement(5,1,"02/03/2000","02/05/2019");
+		test = new Abonnement(daos.getClientDAO().getById(1),daos.getRevueDAO().getById(1),"02/03/2000","02/05/2019");
 		array.add(test);
 		this.daos.getAbonnementDAO().create(test);
 		assertEquals(daos.getAbonnementDAO().GetByDateFin(array.get(0)),array);
@@ -93,7 +93,7 @@ class ListeMemoireAbonnementDAOTest {
 	@Test
 	void test_create_deja_existant()
 	{
-		test = new Abonnement(1,4,"02/03/2000","02/05/2000");
+		test = new Abonnement(daos.getClientDAO().getById(1),daos.getRevueDAO().getById(1),"02/03/2000","02/05/2000");
 		this.daos.getAbonnementDAO().create(test);
 		try {
 			this.daos.getAbonnementDAO().create(test);
@@ -108,7 +108,7 @@ class ListeMemoireAbonnementDAOTest {
 	void test_update_Revue_manquante()
 	{
 		try {
-			this.daos.getAbonnementDAO().update(new Abonnement(1,-1,"02/03/2000","02/05/2000"));
+			this.daos.getAbonnementDAO().update(new Abonnement(daos.getClientDAO().getById(1),daos.getRevueDAO().getById(-1),"02/03/2000","02/05/2000"));
 			fail();
 		}catch(IllegalArgumentException e) {
 			assertTrue(true);
@@ -120,7 +120,7 @@ class ListeMemoireAbonnementDAOTest {
 	void test_delete_Revue_manquante()
 	{
 		try {
-			this.daos.getAbonnementDAO().delete(new Abonnement(1,-1,"02/03/2000","02/05/2000"));
+			this.daos.getAbonnementDAO().delete(new Abonnement(daos.getClientDAO().getById(1),daos.getRevueDAO().getById(-1),"02/03/2000","02/05/2000"));
 			fail();
 		}catch(IllegalArgumentException e) {
 			assertTrue(true);
@@ -131,10 +131,10 @@ class ListeMemoireAbonnementDAOTest {
 	@Test
 	void test_GetByIdClientRevue_Revue_manquant()
 	{
-		test = new Abonnement(2,2,"02/03/2000","02/05/2000");
+		test = new Abonnement(daos.getClientDAO().getById(1),daos.getRevueDAO().getById(1),"02/03/2000","02/05/2000");
 		this.daos.getAbonnementDAO().create(test);
 		try {
-			this.daos.getAbonnementDAO().GetByClientEtRevue(new Abonnement(test.getId_client(),-1,test.getDate_debut(),test.getDate_fin()));
+			this.daos.getAbonnementDAO().GetByClientEtRevue(new Abonnement(test.getClient(),daos.getRevueDAO().getById(-1),test.getDate_debut(),test.getDate_fin()));
 			fail();
 		}catch(IllegalArgumentException e) {
 			assertTrue(true);
@@ -150,7 +150,7 @@ class ListeMemoireAbonnementDAOTest {
 	void test_update_Client_manquante()
 	{
 		try {
-			this.daos.getAbonnementDAO().update(new Abonnement(-1,1,"02/03/2000","02/05/2000"));
+			this.daos.getAbonnementDAO().update(new Abonnement(daos.getClientDAO().getById(-1),daos.getRevueDAO().getById(1),"02/03/2000","02/05/2000"));
 			fail();
 		}catch(IllegalArgumentException e) {
 			assertTrue(true);
@@ -162,7 +162,7 @@ class ListeMemoireAbonnementDAOTest {
 	void test_delete_Client_manquante()
 	{
 		try {
-			this.daos.getAbonnementDAO().delete(new Abonnement(-1,1,"02/03/2000","02/05/2000"));
+			this.daos.getAbonnementDAO().delete(new Abonnement(daos.getClientDAO().getById(-1),daos.getRevueDAO().getById(1),"02/03/2000","02/05/2000"));
 			fail();
 		}catch(IllegalArgumentException e) {
 			assertTrue(true);
@@ -172,10 +172,10 @@ class ListeMemoireAbonnementDAOTest {
 	@Test
 	void test_GetByIdClientRevue_Client_manquant()
 	{
-		test = new Abonnement(2,3,"02/03/2000","02/05/2000");
+		test = new Abonnement(daos.getClientDAO().getById(1),daos.getRevueDAO().getById(1),"02/03/2000","02/05/2000");
 		this.daos.getAbonnementDAO().create(test);
 		try {
-			this.daos.getAbonnementDAO().GetByClientEtRevue(new Abonnement(-1,test.getId_revue(),test.getDate_debut(),test.getDate_fin()));
+			this.daos.getAbonnementDAO().GetByClientEtRevue(new Abonnement(daos.getClientDAO().getById(-1),test.getRevue(),test.getDate_debut(),test.getDate_fin()));
 			fail();
 		}catch(IllegalArgumentException e) {
 			assertTrue(true);

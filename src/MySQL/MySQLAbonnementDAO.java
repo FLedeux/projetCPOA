@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import dao.AbonnementDAO;
+import factory.DAOFactory;
+import factory.Persistance;
 import metier.Abonnement;
 
 public class MySQLAbonnementDAO implements AbonnementDAO{
@@ -30,8 +32,8 @@ private static MySQLAbonnementDAO instance;
 			Connection laConnexion = Connexion.creeConnexion();
 			
 			PreparedStatement requete = laConnexion.prepareStatement("insert into Abonnement (id_client, id_revue, date_debut, date_fin) values(?,?,?,?)");
-			requete.setInt(1, abonnement.getId_client());
-			requete.setInt(2, abonnement.getId_revue());
+			requete.setInt(1, abonnement.getClient().getId());
+			requete.setInt(2, abonnement.getRevue().getId());
 			requete.setDate(3, java.sql.Date.valueOf(abonnement.getDate_debut()));
 			requete.setDate(4,java.sql.Date.valueOf(abonnement.getDate_fin()));
 			int res = requete.executeUpdate();
@@ -56,8 +58,8 @@ private static MySQLAbonnementDAO instance;
 			
 			requete.setDate(1, java.sql.Date.valueOf(abonnement.getDate_debut()));
 			requete.setDate(2,java.sql.Date.valueOf(abonnement.getDate_fin()));	
-			requete.setInt(3, abonnement.getId_client());
-			requete.setInt(4, abonnement.getId_revue());
+			requete.setInt(3, abonnement.getClient().getId());
+			requete.setInt(4, abonnement.getRevue().getId());
 			
 			int res = requete.executeUpdate();
 			
@@ -82,8 +84,8 @@ private static MySQLAbonnementDAO instance;
 		try {
 		Connection laConnexion = Connexion.creeConnexion();
 		PreparedStatement requete = laConnexion.prepareStatement("delete from Abonnement where id_client=? and id_revue=?");
-		requete.setInt(1, abonnement.getId_client());
-		requete.setInt(2, abonnement.getId_revue());
+		requete.setInt(1, abonnement.getClient().getId());
+		requete.setInt(2, abonnement.getRevue().getId());
 		int res = requete.executeUpdate();
 		if (requete != null)requete.close();
 		
@@ -105,14 +107,14 @@ private static MySQLAbonnementDAO instance;
 		try {
 			Connection laConnexion = Connexion.creeConnexion();
 			PreparedStatement requete = laConnexion.prepareStatement("Select * From Abonnement Where id_client=?");
-			requete.setInt(1,abonnement.getId_client());
+			requete.setInt(1,abonnement.getClient().getId());
 			ResultSet res = requete.executeQuery();
 			
 
 			ArrayList<Abonnement> Liste = new ArrayList<Abonnement>();
-			
+			DAOFactory daos = DAOFactory.getDAOFactory(Persistance.ListeMemoire);
 			while (res.next()) {
-				Liste.add(new Abonnement(res.getInt("id_client"),res.getInt("id_revue"),res.getDate("date_debut").toLocalDate(),res.getDate("date_fin").toLocalDate()));
+				Liste.add(new Abonnement(daos.getClientDAO().getById(res.getInt("id_client")),daos.getRevueDAO().getById(res.getInt("id_revue")),res.getDate("date_debut").toLocalDate(),res.getDate("date_fin").toLocalDate()));
 				}
 			if (requete != null)requete.close();
 			if (laConnexion != null)laConnexion.close();
@@ -130,14 +132,15 @@ private static MySQLAbonnementDAO instance;
 		try {
 			Connection laConnexion = Connexion.creeConnexion();
 			PreparedStatement requete = laConnexion.prepareStatement("Select * From Abonnement Where id_revue=?");
-			requete.setInt(1,abonnement.getId_revue());
+			requete.setInt(1,abonnement.getRevue().getId());
 			ResultSet res = requete.executeQuery();
 			
 
 			ArrayList<Abonnement> Liste = new ArrayList<Abonnement>();
 			
+			DAOFactory daos = DAOFactory.getDAOFactory(Persistance.ListeMemoire);
 			while (res.next()) {
-				Liste.add(new Abonnement(res.getInt("id_client"),res.getInt("id_revue"),res.getDate("date_debut").toLocalDate(),res.getDate("date_fin").toLocalDate()));
+				Liste.add(new Abonnement(daos.getClientDAO().getById(res.getInt("id_client")),daos.getRevueDAO().getById(res.getInt("id_revue")),res.getDate("date_debut").toLocalDate(),res.getDate("date_fin").toLocalDate()));
 				}
 			if (requete != null)requete.close();
 			if (laConnexion != null)laConnexion.close();
@@ -155,13 +158,13 @@ private static MySQLAbonnementDAO instance;
 		try {
 			Connection laConnexion = Connexion.creeConnexion();
 			PreparedStatement requete = laConnexion.prepareStatement("Select * From Abonnement Where id_client=? AND id_revue=?");
-			requete.setInt(1,abonnement.getId_client());
-			requete.setInt(2, abonnement.getId_revue());
+			requete.setInt(1,abonnement.getClient().getId());
+			requete.setInt(2, abonnement.getRevue().getId());
 			ResultSet res = requete.executeQuery();
 			
-
+			DAOFactory daos = DAOFactory.getDAOFactory(Persistance.ListeMemoire);
 			if(res.next()) {
-				Abonnement abo = new Abonnement(res.getInt("id_client"),res.getInt("id_revue"),res.getDate("date_debut").toLocalDate(),res.getDate("date_fin").toLocalDate());
+				Abonnement abo = new Abonnement(daos.getClientDAO().getById(res.getInt("id_client")),daos.getRevueDAO().getById(res.getInt("id_revue")),res.getDate("date_debut").toLocalDate(),res.getDate("date_fin").toLocalDate());
 
 				if (requete != null)requete.close();
 				if (laConnexion != null)laConnexion.close();
@@ -192,9 +195,10 @@ private static MySQLAbonnementDAO instance;
 			
 
 			ArrayList<Abonnement> Liste = new ArrayList<Abonnement>();
-			
+		
+			DAOFactory daos = DAOFactory.getDAOFactory(Persistance.ListeMemoire);
 			while (res.next()) {
-				Liste.add(new Abonnement(res.getInt("id_client"),res.getInt("id_revue"),res.getDate("date_debut").toLocalDate(),res.getDate("date_fin").toLocalDate()));
+				Liste.add(new Abonnement(daos.getClientDAO().getById(res.getInt("id_client")),daos.getRevueDAO().getById(res.getInt("id_revue")),res.getDate("date_debut").toLocalDate(),res.getDate("date_fin").toLocalDate()));
 				}
 			if (requete != null)requete.close();
 			if (laConnexion != null)laConnexion.close();
@@ -218,8 +222,9 @@ private static MySQLAbonnementDAO instance;
 
 			ArrayList<Abonnement> Liste = new ArrayList<Abonnement>();
 			
+			DAOFactory daos = DAOFactory.getDAOFactory(Persistance.ListeMemoire);
 			while (res.next()) {
-				Liste.add(new Abonnement(res.getInt("id_client"),res.getInt("id_revue"),res.getDate("date_debut").toLocalDate(),res.getDate("date_fin").toLocalDate()));
+				Liste.add(new Abonnement(daos.getClientDAO().getById(res.getInt("id_client")),daos.getRevueDAO().getById(res.getInt("id_revue")),res.getDate("date_debut").toLocalDate(),res.getDate("date_fin").toLocalDate()));
 				}
 			if (requete != null)requete.close();
 			if (laConnexion != null)laConnexion.close();

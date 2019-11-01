@@ -82,7 +82,7 @@ public class Launch_abonnement extends Application implements Initializable{
 	}
 	
 	public void creation() {
-		Abonnement a = new Abonnement(this.cbb_client.getValue().getId(),this.cbb_revue.getValue().getId(),this.dp_debut.getValue(),this.dp_fin.getValue());
+		Abonnement a = new Abonnement(this.cbb_client.getValue(),this.cbb_revue.getValue(),this.dp_debut.getValue(),this.dp_fin.getValue());
 		this.daos.getAbonnementDAO().create(a);
 		lbl_display.setText(a.toString());
 	}
