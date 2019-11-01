@@ -1,11 +1,13 @@
 package liste_memoire;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import dao.RevueDAO;
 import factory.DAOFactory;
 import factory.Persistance;
 import metier.Abonnement;
+import metier.Client;
 import metier.Periodicite;
 import metier.Revue;
 
@@ -136,6 +138,26 @@ public class ListeMemoireRevueDAO implements RevueDAO{
 	@Override
 	public ArrayList<Revue> findAll() {
 	return this.donnees;
+	}
+
+	@Override
+	public ArrayList<Revue> Classement_periodicite() {
+		ArrayList<Revue> donnees = this.donnees;
+		Collections.sort(donnees);
+		return donnees;
+	}
+
+	@Override
+	public ArrayList<Revue> GetByTarif(Revue revue) {
+		int i=0;
+		ArrayList<Revue> array = new ArrayList<Revue>();
+		while(i<this.donnees.size()) {
+			if (this.donnees.get(i).getTarif_numero()<=revue.getTarif_numero()) {
+				array.add(this.donnees.get(i));
+			}
+			i++;
+		}
+		return array;
 	}
 
 }

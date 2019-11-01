@@ -1,7 +1,7 @@
 package metier;
 
 
-public class Revue {
+public class Revue implements Comparable<Revue>{
 	private int id;
 	private String titre;
 	private String description;
@@ -114,6 +114,12 @@ public class Revue {
 		int result = 1;
 		result = prime * result + id;
 		return result;
+	}
+
+
+	@Override
+	public int compareTo(Revue arg0) {
+		return perio.getId()-arg0.getId();
 	}
 	
 }

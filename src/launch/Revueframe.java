@@ -48,8 +48,8 @@ public class Revueframe implements Initializable{
 		    	b_modifier.setDisable(false);
 		    	b_supprimer.setDisable(false);
 		    	r = this.tableau.getSelectionModel().getSelectedItem();
-		    	//if(Revue_option.getb_recherche_abonnement()!=null)
-		    		//Revue_option.getb_recherche_abonnement().setDisable(false);
+		    	if(Revue_option.getb_voir_abonnement()!=null)
+		    		Revue_option.getb_voir_abonnement().setDisable(false);
 		    }
 		});		
 	}
