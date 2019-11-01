@@ -1,5 +1,6 @@
 package liste_memoire;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import dao.AbonnementDAO;
@@ -135,6 +136,16 @@ public class ListeMemoireAbonnementDAO implements AbonnementDAO{
 	@Override
 	public ArrayList<Abonnement> findAll() {
 		return this.donnees;
+	}
+
+	@Override
+	public ArrayList<Abonnement> Abonnement_en_cours() {
+		ArrayList<Abonnement> Liste = new ArrayList<Abonnement>();
+		for(int i=0;i<donnees.size();i++) {
+			if((donnees.get(i).getDate_debut().isBefore(LocalDate.now()))&&donnees.get(i).getDate_fin().isAfter(LocalDate.now()))
+				Liste.add(donnees.get(i));
+		}
+		return Liste;
 	}
 	
 	}

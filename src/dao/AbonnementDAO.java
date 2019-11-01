@@ -11,6 +11,6 @@ public interface AbonnementDAO extends DAO<Abonnement>{
 	public abstract Abonnement GetByClientEtRevue(Abonnement abonnement);
 	public abstract ArrayList<Abonnement> GetByDateDebut(Abonnement abonnement);
 	public abstract ArrayList<Abonnement> GetByDateFin(Abonnement abonnement);
-	 
+	public abstract ArrayList<Abonnement> Abonnement_en_cours();
 
 }

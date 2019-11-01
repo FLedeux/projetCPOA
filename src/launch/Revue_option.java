@@ -1,6 +1,7 @@
 package launch;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -11,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import metier.Abonnement;
 import metier.Periodicite;
 import metier.Revue;
 
@@ -77,7 +79,8 @@ public class Revue_option implements Initializable{
 	}
 	
 	public void voir_abonnement() {
-		//TODO 
+		ArrayList<Abonnement> liste = Launch_main.getdaos().getAbonnementDAO().GetByIDRevue(new Abonnement(null,Revueframe.getselecteditem(),"01/01/2000","01/01/2000"));
+		Abonnementframe.load_Abonnement(liste, getClass().getResource("../fxml/abonnmentframe.fxml"));
 	}
 	
 	@FXML

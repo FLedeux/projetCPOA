@@ -2,25 +2,15 @@ package launch;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Scanner;
-
-import factory.DAOFactory;
-import factory.Persistance;
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import metier.Abonnement;
 import metier.Client;
 import metier.Revue;

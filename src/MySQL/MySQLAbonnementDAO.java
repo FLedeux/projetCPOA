@@ -285,4 +285,26 @@ private static MySQLAbonnementDAO instance;
 			}
 	}
 
+	@Override
+	public ArrayList<Abonnement> Abonnement_en_cours() {
+try {
+			
+			Connection laConnexion = Connexion.creeConnexion();
+			PreparedStatement requete = laConnexion.prepareStatement("Select * From Abonnement WHERE date_debut <= NOW() AND date_fin >= NOW()");
+			ResultSet res = requete.executeQuery();
+			ArrayList<Abonnement> array = new ArrayList<Abonnement>();
+			
+			while (res.next()) {
+				array.add(new Abonnement(Launch_main.getdaos().getClientDAO().getById(res.getInt("id_client")),Launch_main.getdaos().getRevueDAO().getById(res.getInt("id_revue")),res.getDate("date_debut").toLocalDate(),res.getDate("date_fin").toLocalDate()));
+			}
+			if (requete != null)requete.close();
+			if (laConnexion != null)laConnexion.close();
+			return array;
+			
+			}catch(SQLException sqle) {
+				System.out.println("Pb select" + sqle.getMessage());
+				return null;
+			}
+	}
+
 }

@@ -21,6 +21,7 @@ public class Launch_main extends Application{
 	@FXML private MenuItem mi_liste;
 	@FXML private VBox vbox_container;
 	private static DAOFactory daos;
+	private static VBox vbox_interaction;
 
 	
 	public static void main(String[] args) {
@@ -82,6 +83,7 @@ public class Launch_main extends Application{
 			VBox e = fxmlLoader.load();
 			this.vbox_container.getChildren().clear();
 			this.vbox_container.getChildren().add(e);
+			vbox_interaction = this.vbox_container;
 		}
 		catch(IOException e) {
 			System.out.println(e);
@@ -110,6 +112,7 @@ public class Launch_main extends Application{
 			VBox e = fxmlLoader.load();
 			this.vbox_container.getChildren().clear();
 			this.vbox_container.getChildren().add(e);
+			vbox_interaction = this.vbox_container;
 		}
 		catch(IOException e) {
 			System.out.println(e);
@@ -121,7 +124,9 @@ public class Launch_main extends Application{
 		return daos;
 	}
 	
-	
+	public static VBox getVBox() {
+		return vbox_interaction;
+	}
 	
 
 }

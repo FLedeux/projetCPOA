@@ -3,6 +3,7 @@ package launch;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
@@ -125,6 +126,20 @@ public class Abonnementframe implements Initializable{
 	
 	public static VBox getvbox() {
 		return vbox_interaction;
+	}
+	
+	public static void load_Abonnement(ArrayList<Abonnement> liste, URL fxmlURL) {
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(fxmlURL);
+			VBox e = fxmlLoader.load();
+			Launch_main.getVBox().getChildren().clear();
+			Launch_main.getVBox().getChildren().add(e);
+			gettableview().getItems().clear();
+			gettableview().getItems().addAll(liste);
+		}
+		catch(IOException e) {
+			System.out.println(e);
+		}		
 	}
 
 	

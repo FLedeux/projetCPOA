@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import metier.Abonnement;
 import metier.Client;
 
 public class Client_option implements Initializable{
@@ -66,8 +67,8 @@ public class Client_option implements Initializable{
 	}
 	
 	public void voir_abonnement() {
-		//TODO pas encore pret
-	}
+		ArrayList<Abonnement> liste = Launch_main.getdaos().getAbonnementDAO().GetByIDClient(new Abonnement(Clientframe.getselecteditem(),null,"01/01/2000","01/01/2000"));
+		Abonnementframe.load_Abonnement(liste, getClass().getResource("../fxml/abonnmentframe.fxml"));	}
 	
 	public static Button getb_recherche_abonnement() {
 		return b_recherche_abonnement_interaction;
