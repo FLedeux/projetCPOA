@@ -11,7 +11,6 @@ import factory.DAOFactory;
 import factory.Persistance;
 import launch.Launch_main;
 import metier.Abonnement;
-import metier.Client;
 
 public class MySQLAbonnementDAO implements AbonnementDAO{
 

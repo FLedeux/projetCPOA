@@ -14,7 +14,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
-import metier.Client;
 import metier.Periodicite;
 import metier.Revue;
 

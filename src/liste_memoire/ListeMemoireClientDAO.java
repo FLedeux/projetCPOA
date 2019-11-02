@@ -8,7 +8,6 @@ import factory.DAOFactory;
 import factory.Persistance;
 import metier.Abonnement;
 import metier.Client;
-import metier.Revue;
 
 
 public class ListeMemoireClientDAO implements ClientDAO{
@@ -193,7 +192,7 @@ public class ListeMemoireClientDAO implements ClientDAO{
 
 	@Override
 	public ArrayList<Client> Trie_Alphabetique() {
-		this.methodecomp=false;
+		ListeMemoireClientDAO.methodecomp=false;
 		ArrayList<Client> donnees = this.donnees;
 		Collections.sort(donnees);//regarder pour faire uen autre class de comparateur pour un coup ville et pour l'autre coup: plus propre
 		return donnees;
@@ -201,7 +200,7 @@ public class ListeMemoireClientDAO implements ClientDAO{
 
 	@Override
 	public ArrayList<Client> Trie_Ville() {
-		this.methodecomp=true;
+		ListeMemoireClientDAO.methodecomp=true;
 		ArrayList<Client> donnees = this.donnees;
 		Collections.sort(donnees);//regarder pour faire uen autre class de comparateur pour un coup ville et pour l'autre coup: plus propre
 		return donnees;

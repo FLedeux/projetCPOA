@@ -16,7 +16,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import metier.Abonnement;
 import metier.Client;
-import metier.Periodicite;
 import metier.Revue;
 
 public class Abonnementframe implements Initializable{

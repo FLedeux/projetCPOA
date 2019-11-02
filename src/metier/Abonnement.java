@@ -3,9 +3,7 @@ package metier;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
 
-import factory.DAOFactory;
 
 public class Abonnement {
 

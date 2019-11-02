@@ -8,7 +8,6 @@ import factory.DAOFactory;
 import factory.Persistance;
 import launch.Launch_main;
 import metier.Abonnement;
-import metier.Client;
 import metier.Periodicite;
 import metier.Revue;
 

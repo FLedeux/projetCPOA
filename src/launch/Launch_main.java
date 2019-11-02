@@ -10,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -49,14 +48,14 @@ public class Launch_main extends Application{
 	
 	
 	public void MySQL_click() {
-		this.daos = DAOFactory.getDAOFactory(Persistance.MYSQL);
+		Launch_main.daos = DAOFactory.getDAOFactory(Persistance.MYSQL);
 		this.mi_sql.setDisable(true);
 		this.mi_liste.setDisable(false);
 		this.vbox_container.getChildren().clear();
 	}
 	
 	public void ListeMemoire_click() {
-		this.daos = DAOFactory.getDAOFactory(Persistance.ListeMemoire);
+		Launch_main.daos = DAOFactory.getDAOFactory(Persistance.ListeMemoire);
 		this.mi_liste.setDisable(true);
 		this.mi_sql.setDisable(false);
 		this.vbox_container.getChildren().clear();

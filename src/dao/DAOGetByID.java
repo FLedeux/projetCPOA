@@ -1,6 +1,5 @@
 package dao;
 
-import java.util.ArrayList;
 
 public interface DAOGetByID<T> extends DAO<T>{
 
