@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="launch.Revue_option">
    <children>
       <GridPane prefHeight="445.0" prefWidth="579.0">
@@ -33,9 +32,9 @@
             <TextField fx:id="tf_titre" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Button fx:id="b_trie_tarif" disable="true" mnemonicParsing="false" onAction="#trie_tarif" text="trie par tarif" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
             <TextField fx:id="tf_tarif" onKeyTyped="#test_numerique" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Label text="Periodicite : " GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+            <Label text="Periodicite : " GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
             <Label text="Titre : " GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-            <Label text="tarif : " GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+            <Label text="Tarif : " GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
          </children>
       </GridPane>
    </children>
