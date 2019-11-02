@@ -13,7 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import metier.Periodicite;
 
-public class Launch_periodicite  implements Initializable{
+public class Periodicite_ajout  implements Initializable{
 
 	@FXML private TextField tf_periodicite;
 	@FXML private Button b_creer;

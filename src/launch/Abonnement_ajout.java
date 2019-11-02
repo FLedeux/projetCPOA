@@ -15,7 +15,7 @@ import metier.Abonnement;
 import metier.Client;
 import metier.Revue;
 
-public class Launch_abonnement implements Initializable{
+public class Abonnement_ajout implements Initializable{
 
 	@FXML private ComboBox<Client> cbb_client;
 	@FXML private ComboBox<Revue> cbb_revue;
