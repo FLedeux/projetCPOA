@@ -112,7 +112,7 @@ public class ListeMemoireClientDAO implements ClientDAO{
 		int i=0;
 		ArrayList<Client> array = new ArrayList<Client>();
 		while(i<this.donnees.size()) {
-			if ((this.donnees.get(i).getNom()==client.getNom())&&(this.donnees.get(i).getPrenom()==client.getPrenom())) {
+			if ((this.donnees.get(i).getNom().contentEquals(client.getNom()))&&(this.donnees.get(i).getPrenom().equals(client.getPrenom()))) {
 				array.add(this.donnees.get(i));
 			}
 			i++;
@@ -183,7 +183,7 @@ public class ListeMemoireClientDAO implements ClientDAO{
 		int i=0;
 		ArrayList<Client> array = new ArrayList<Client>();
 		while(i<this.donnees.size()) {
-			if (this.donnees.get(i).getNom()==client.getNom()) {
+			if (this.donnees.get(i).getNom().equals(client.getNom())) {
 				array.add(this.donnees.get(i));
 			}
 			i++;

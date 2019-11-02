@@ -113,7 +113,7 @@ public class ListeMemoireRevueDAO implements RevueDAO{
 		ArrayList<Revue> data = findAll();
 		
 		int i=0;
-		while((i<data.size())&&(data.get(i).getTitre()!=revue.getTitre())) {
+		while((i<data.size())&&(!data.get(i).getTitre().contentEquals(revue.getTitre()))) {
 			i++;
 		}
 		if(i>=data.size()) {
