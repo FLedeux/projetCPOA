@@ -26,8 +26,8 @@
          <children>
             <TextField fx:id="tf_prenom" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             <TextField fx:id="tf_nom" prefHeight="26.0" prefWidth="217.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <Button fx:id="b_trie_nom_prenom" mnemonicParsing="false" disable="true" onAction="#recherche_nom_prenom" text="rechercher par prenom" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-            <Button fx:id="b_trie_nom" mnemonicParsing="false" disable="true" onAction="#recherche_nom" text="rechercher par nom" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <Button fx:id="b_recherche_nom_prenom" mnemonicParsing="false" disable="true" onAction="#recherche_nom_prenom" text="rechercher par nom et prenom" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <Button fx:id="b_recherche_nom" mnemonicParsing="false" disable="true" onAction="#recherche_nom" text="rechercher par nom" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
             <Button mnemonicParsing="false" onAction="#trie_alphabetique" text="trie alphabetique" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <Button mnemonicParsing="false" onAction="#trie_ville" text="trie par ville" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <Label text="Nom : " GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />

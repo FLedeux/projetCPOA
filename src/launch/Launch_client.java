@@ -146,6 +146,7 @@ public class Launch_client implements Initializable {
 	        	this.tf_code_postal.setText(this.c.getCode_postal());
 	        	this.tf_ville.setText(this.c.getVille());
 	        	this.tf_pays.setText(this.c.getPays());
+	        	this.b_creer.setText("modifier");
 	        }
 		}
 		

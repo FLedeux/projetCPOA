@@ -25,7 +25,7 @@
           <RowConstraints maxHeight="102.60001220703123" minHeight="10.0" prefHeight="85.80002441406248" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="b_classement_periodicite" disable="true" mnemonicParsing="false" onAction="#classement_periodicite" text="classement par périodicité" GridPane.halignment="CENTER" />
+            <Button fx:id="b_classement_periodicite" mnemonicParsing="false" onAction="#classement_periodicite" text="classement par périodicité" GridPane.halignment="CENTER" />
             <Button fx:id="b_voir_abonnement" mnemonicParsing="false" onAction="#voir_abonnement" text="voir les abonnement" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
             <Button fx:id="b_trie_periodicte" disable="true" mnemonicParsing="false" onAction="#trie_periodicite" text="trie par périodicite" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
             <ComboBox fx:id="cbb_perio" onAction="#test_combobox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />

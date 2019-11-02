@@ -42,9 +42,6 @@ public class ListeMemoireAbonnementDAO implements AbonnementDAO{
 	@Override
 	public boolean update(Abonnement object) {
 		
-		if(this.donnees.contains(object)) {
-			throw new IllegalArgumentException("Cet abonnement existe déjà");
-		}
 		
 		int idx = this.donnees.indexOf(object);
 		if (idx == -1) {

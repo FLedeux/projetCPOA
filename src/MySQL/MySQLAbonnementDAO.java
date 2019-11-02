@@ -68,19 +68,7 @@ private static MySQLAbonnementDAO instance;
 		try {
 			Connection laConnexion = Connexion.creeConnexion();
 			
-			PreparedStatement requete = laConnexion.prepareStatement("Select count(*) from Abonnement where  id_client = ? AND id_revue = ?");
-			requete.setInt(1, abonnement.getClient().getId());
-			requete.setInt(2, abonnement.getRevue().getId());
-
-			
-			ResultSet result = requete.executeQuery();
-			result.next();
-			if (result.getInt(1)>0) {
-				throw (new IllegalArgumentException("Cet abonnement existe déjà"));
-			}
-			
-			
-			requete = laConnexion.prepareStatement("update Abonnement set date_debut=?,date_fin=?  where id_client=? AND id_revue=?");
+			PreparedStatement requete = laConnexion.prepareStatement("update Abonnement set date_debut=?,date_fin=?  where id_client=? AND id_revue=?");
 			
 			requete.setDate(1, java.sql.Date.valueOf(abonnement.getDate_debut()));
 			requete.setDate(2,java.sql.Date.valueOf(abonnement.getDate_fin()));	
@@ -138,7 +126,7 @@ private static MySQLAbonnementDAO instance;
 			
 
 			ArrayList<Abonnement> Liste = new ArrayList<Abonnement>();
-			DAOFactory daos = DAOFactory.getDAOFactory(Persistance.ListeMemoire);
+			DAOFactory daos = DAOFactory.getDAOFactory(Persistance.MYSQL);
 			while (res.next()) {
 				Liste.add(new Abonnement(daos.getClientDAO().getById(res.getInt("id_client")),daos.getRevueDAO().getById(res.getInt("id_revue")),res.getDate("date_debut").toLocalDate(),res.getDate("date_fin").toLocalDate()));
 				}
@@ -164,7 +152,7 @@ private static MySQLAbonnementDAO instance;
 
 			ArrayList<Abonnement> Liste = new ArrayList<Abonnement>();
 			
-			DAOFactory daos = DAOFactory.getDAOFactory(Persistance.ListeMemoire);
+			DAOFactory daos = DAOFactory.getDAOFactory(Persistance.MYSQL);
 			while (res.next()) {
 				Liste.add(new Abonnement(daos.getClientDAO().getById(res.getInt("id_client")),daos.getRevueDAO().getById(res.getInt("id_revue")),res.getDate("date_debut").toLocalDate(),res.getDate("date_fin").toLocalDate()));
 				}
@@ -188,7 +176,7 @@ private static MySQLAbonnementDAO instance;
 			requete.setInt(2, abonnement.getRevue().getId());
 			ResultSet res = requete.executeQuery();
 			
-			DAOFactory daos = DAOFactory.getDAOFactory(Persistance.ListeMemoire);
+			DAOFactory daos = DAOFactory.getDAOFactory(Persistance.MYSQL);
 			if(res.next()) {
 				Abonnement abo = new Abonnement(daos.getClientDAO().getById(res.getInt("id_client")),daos.getRevueDAO().getById(res.getInt("id_revue")),res.getDate("date_debut").toLocalDate(),res.getDate("date_fin").toLocalDate());
 

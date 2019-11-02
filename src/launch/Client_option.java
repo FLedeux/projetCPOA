@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -24,8 +25,13 @@ public class Client_option implements Initializable{
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		if(Clientframe.getselecteditem()!=null)
+		if(Clientframe.getselecteditem()!=null) {
 			b_recherche_abonnement.setDisable(false);
+			tf_nom.setText(Clientframe.getselecteditem().getNom());
+			tf_prenom.setText(Clientframe.getselecteditem().getPrenom());
+			this.b_recherche_nom.setDisable(false);
+    		this.b_recherche_nom_prenom.setDisable(false);
+		}
 		
 		tf_nom.textProperty().addListener((observable, oldValue, newValue)->{
         	if (!newValue.isEmpty()) {
@@ -41,6 +47,7 @@ public class Client_option implements Initializable{
 		tf_prenom.textProperty().addListener((observable, oldValue, newValue)->{
 				this.b_recherche_nom_prenom.setDisable(newValue.isEmpty()||(this.tf_nom.getText().isEmpty()));
 		});
+		
 		b_recherche_abonnement_interaction=this.b_recherche_abonnement;
 	}
 
@@ -68,7 +75,10 @@ public class Client_option implements Initializable{
 	
 	public void voir_abonnement() {
 		ArrayList<Abonnement> liste = Launch_main.getdaos().getAbonnementDAO().GetByIDClient(new Abonnement(Clientframe.getselecteditem(),null,"01/01/2000","01/01/2000"));
-		Abonnementframe.load_Abonnement(liste, getClass().getResource("../fxml/abonnmentframe.fxml"));	}
+		URL fxmlURL=getClass().getResource("../fxml/abonnementframe.fxml");
+		FXMLLoader fxmlLoader = new FXMLLoader(fxmlURL);
+		Abonnementframe.load_Abonnement(liste, fxmlLoader);
+		}
 	
 	public static Button getb_recherche_abonnement() {
 		return b_recherche_abonnement_interaction;

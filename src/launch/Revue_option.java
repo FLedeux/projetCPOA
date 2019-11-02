@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -80,7 +81,9 @@ public class Revue_option implements Initializable{
 	
 	public void voir_abonnement() {
 		ArrayList<Abonnement> liste = Launch_main.getdaos().getAbonnementDAO().GetByIDRevue(new Abonnement(null,Revueframe.getselecteditem(),"01/01/2000","01/01/2000"));
-		Abonnementframe.load_Abonnement(liste, getClass().getResource("../fxml/abonnmentframe.fxml"));
+		URL fxmlURL=getClass().getResource("../fxml/abonnementframe.fxml");
+		FXMLLoader fxmlLoader = new FXMLLoader(fxmlURL);
+		Abonnementframe.load_Abonnement(liste, fxmlLoader);
 	}
 	
 	@FXML
@@ -94,11 +97,9 @@ public class Revue_option implements Initializable{
 	public void test_combobox(ActionEvent e) {
 		if(cbb_perio.getValue()!=null) {
 			this.b_trie_periodicte.setDisable(false);
-			this.b_classement_periodicite.setDisable(false);
 		}
 		else {
 			this.b_classement_periodicite.setDisable(true);
-			this.b_trie_periodicte.setDisable(true);
 		}
 	}
 	

@@ -61,9 +61,9 @@ public class ListeMemoirePeriodiciteDAO implements PeriodiciteDAO{
 		while (this.donnees.contains(object)) {
 
 			object.setId(object.getId() + 1);
+			System.out.println("test");
 		}
-		boolean ok = this.donnees.add(object);
-		
+		boolean ok = this.donnees.add(object);		
 		return ok;
 	}
 
@@ -127,8 +127,7 @@ public class ListeMemoirePeriodiciteDAO implements PeriodiciteDAO{
 
 	@Override
 	public ArrayList<Periodicite> findAll() {
-		ListeMemoirePeriodiciteDAO p = new  ListeMemoirePeriodiciteDAO();
-		 return p.donnees;
+		 return this.donnees;
 	}
 
 }

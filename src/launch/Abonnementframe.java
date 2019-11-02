@@ -51,6 +51,8 @@ public class Abonnementframe implements Initializable{
 		    	a = this.tableau.getSelectionModel().getSelectedItem();
 		    }
 		});
+		vbox_interaction=this.vbox_ajout;
+		tableau_interaction=this.tableau;
 	}
 	
 	private void load_vbox_ajout() throws IOException {
@@ -128,9 +130,8 @@ public class Abonnementframe implements Initializable{
 		return vbox_interaction;
 	}
 	
-	public static void load_Abonnement(ArrayList<Abonnement> liste, URL fxmlURL) {
+	public static void load_Abonnement(ArrayList<Abonnement> liste,FXMLLoader fxmlLoader) {
 		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(fxmlURL);
 			VBox e = fxmlLoader.load();
 			Launch_main.getVBox().getChildren().clear();
 			Launch_main.getVBox().getChildren().add(e);
