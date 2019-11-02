@@ -142,7 +142,11 @@ public class ListeMemoireRevueDAO implements RevueDAO{
 	public ArrayList<Revue> findAll() {
 		ArrayList<Revue> liste = this.donnees;
 		for(int i=0;i<liste.size();i++) {
-			liste.get(i).setQuantite(Launch_main.getdaos().getAbonnementDAO().GetByIDRevue(new Abonnement(null,liste.get(i),"01/01/2000","01/01/2000")).size());
+			try {
+				liste.get(i).setQuantite(Launch_main.getdaos().getAbonnementDAO().GetByIDRevue(new Abonnement(null,liste.get(i),"01/01/2000","01/01/2000")).size());
+			}catch(NullPointerException e) {
+				liste.get(i).setQuantite(0);
+			}
 		}
 		return this.donnees;
 	

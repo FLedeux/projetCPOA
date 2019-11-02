@@ -90,7 +90,7 @@ public class ListeMemoireClientDAO implements ClientDAO{
 		ArrayList<Abonnement> abonnement= DAOFactory.getDAOFactory(Persistance.ListeMemoire).getAbonnementDAO().GetByIDClient(new Abonnement(object,null,"01/01/2000","01/01/2000")); 
 		
 		if(abonnement.size()!=0) {
-			throw new IllegalArgumentException("Impossible de supprimer une périodicité utiliser par une revue");
+			throw new IllegalArgumentException("Impossible de supprimer un client utiliser par un abonnement");
 		}
 		
 		Client supprime;

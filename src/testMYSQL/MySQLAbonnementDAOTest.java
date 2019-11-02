@@ -162,8 +162,8 @@ class MySQLAbonnementDAOTest {
 	@Test
 	void test_GetByIdClientRevue_Revue_manquant()
 	{
-		test = new Abonnement(c,daos.getRevueDAO().getById(-1),"02/03/2000","02/05/2000");
 		try {
+			test = new Abonnement(c,daos.getRevueDAO().getById(-1),"02/03/2000","02/05/2000");
 			this.daos.getAbonnementDAO().GetByClientEtRevue(new Abonnement(test.getClient(),daos.getRevueDAO().getById(-1),test.getDate_debut(),test.getDate_fin()));
 			fail();
 		}catch(IllegalArgumentException e) {
@@ -202,8 +202,8 @@ class MySQLAbonnementDAOTest {
 	@Test
 	void test_GetByIdClientRevue_Client_manquant()
 	{
-		test = new Abonnement(daos.getClientDAO().getById(-1),r,"02/03/2000","02/05/2000");
 		try {
+			test = new Abonnement(daos.getClientDAO().getById(-1),r,"02/03/2000","02/05/2000");
 			this.daos.getAbonnementDAO().GetByClientEtRevue(new Abonnement(daos.getClientDAO().getById(-1),test.getRevue(),test.getDate_debut(),test.getDate_fin()));
 			fail();
 		}catch(IllegalArgumentException e) {

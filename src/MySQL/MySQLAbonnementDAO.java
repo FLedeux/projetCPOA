@@ -209,7 +209,7 @@ private static MySQLAbonnementDAO instance;
 
 			ArrayList<Abonnement> Liste = new ArrayList<Abonnement>();
 		
-			DAOFactory daos = DAOFactory.getDAOFactory(Persistance.ListeMemoire);
+			DAOFactory daos = DAOFactory.getDAOFactory(Persistance.MYSQL);
 			while (res.next()) {
 				Liste.add(new Abonnement(daos.getClientDAO().getById(res.getInt("id_client")),daos.getRevueDAO().getById(res.getInt("id_revue")),res.getDate("date_debut").toLocalDate(),res.getDate("date_fin").toLocalDate()));
 				}
@@ -235,7 +235,7 @@ private static MySQLAbonnementDAO instance;
 
 			ArrayList<Abonnement> Liste = new ArrayList<Abonnement>();
 			
-			DAOFactory daos = DAOFactory.getDAOFactory(Persistance.ListeMemoire);
+			DAOFactory daos = DAOFactory.getDAOFactory(Persistance.MYSQL);
 			while (res.next()) {
 				Liste.add(new Abonnement(daos.getClientDAO().getById(res.getInt("id_client")),daos.getRevueDAO().getById(res.getInt("id_revue")),res.getDate("date_debut").toLocalDate(),res.getDate("date_fin").toLocalDate()));
 				}
